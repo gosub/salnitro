@@ -32,10 +32,11 @@ def draw(player):
 
 def play_card(player, hand_pos, target):
     card = player['hand'][hand_pos]
-    assert(card['cost'] <= player['mana'])
+    assert card['cost'] <= player['mana'], "insufficient mana"
     del player['hand'][hand_pos]
     player['mana'] -= card['cost']
     target['health'] -= card['damage']
+    assert target['health'] > 0, "current player wins"
 
 def play(g, hand_pos):
     play_card(active(g), hand_pos, inactive(g))
