@@ -56,8 +56,13 @@ def repr_card(c):
 def repr_hand(p):
     return " ".join(repr_card(c) for c in p['hand'])
 
-def repr_player(p):
-    return "H: %d |%s| M: %s" % (p['health'], repr_hand(p), repr_mana(p))
+def repr_player(p, inverted=False):
+    hand = repr_hand(p)
+    health_mana = "[%2d][%s]" % (p['health'], repr_mana(p))
+    lines = [hand, health_mana]
+    if inverted:
+        lines.reverse()
+    return "\n".join(lines)
 
 def show(game):
     print(repr_player(inactive(game)))
