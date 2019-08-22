@@ -48,7 +48,10 @@ def new_turn(game):
     draw(active(game))
 
 def repr_mana(p):
-    return "*" * p['mana'] + "-" * (p['mana_slots'] - p['mana'])
+    mana = "*" * p['mana']
+    mana += "-" * (p['mana_slots'] - p['mana'])
+    mana += "." * (10-p['mana_slots'])
+    return mana
 
 def repr_card(c):
     return "{%d,%d}" % (c['cost'], c['damage'])
