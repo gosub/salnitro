@@ -68,6 +68,6 @@ def repr_player(p, inverted=False):
     return "\n".join(lines)
 
 def show(game):
-    print(repr_player(inactive(game)))
+    print(repr_player(inactive(game), True))
     print()
     print(repr_player(active(game)))
