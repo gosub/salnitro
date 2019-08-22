@@ -1,4 +1,5 @@
 import random
+from os import system
 
 def mkplayer():
     cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
@@ -71,3 +72,18 @@ def show(game):
     print(repr_player(inactive(game), True))
     print()
     print(repr_player(active(game)))
+
+def interactive():
+    g = mkgame()
+    while True:
+        new_turn(g)
+        while True:
+            system('clear')
+            show(g)
+            cmd = input('\ncard to play [RET=pass]: ').strip().lower()
+            if cmd == '' or cmd == 'pass':
+                break
+            elif all(x.isdigit() for x in cmd):
+                play(g, int(cmd))
+            else:
+                print("command not recognized")
