@@ -10,7 +10,7 @@ def mkcard(cost):
     return {'cost': cost, 'damage': cost}
 
 def mkgame():
-    return {'players': [mkplayer(), mkplayer()], 'active': random.choice([0,1])} 
+    return {'players': [mkplayer(), mkplayer()], 'active': random.choice([0,1])}
 
 def active(game):
     return game['players'][game['active']]
