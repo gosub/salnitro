@@ -52,8 +52,8 @@ def new_turn(game):
     draw(active(game))
 
 def repr_mana(p):
-    mana = "*" * p['mana']
-    mana += "-" * (p['mana_slots'] - p['mana'])
+    mana = "♦" * p['mana']
+    mana += "♢" * (p['mana_slots'] - p['mana'])
     mana += "." * (10-p['mana_slots'])
     return mana
 
@@ -65,7 +65,7 @@ def repr_hand(p):
 
 def repr_player(p, inverted=False):
     hand = repr_hand(p)
-    health_mana = "[%2d][%s]" % (p['health'], repr_mana(p))
+    health_mana = "[%s][❤️%2d][%s][≣%d]" % (p['name'], p['health'], repr_mana(p), len(p['deck']))
     lines = [hand, health_mana]
     if inverted:
         lines.reverse()
