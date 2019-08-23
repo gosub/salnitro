@@ -87,3 +87,7 @@ def interactive():
                 play(g, int(cmd))
             else:
                 print("command not recognized")
+
+
+if __name__ == "__main__":
+    interactive()
