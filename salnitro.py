@@ -28,19 +28,22 @@ def inc_mana_slot(player):
 def refill_mana(player):
     player['mana'] = player['mana_slots']
 
+def decr_health(player, amount):
+    player['health'] -= amount
+    assert player['health'] > 0, "%s lost" % (player['name'])
+
 def draw(player):
     try:
         player['hand'].append(player['deck'].pop())
     except IndexError:
-        player['health'] -= 1
+        decr_health(player, 1)
 
 def play_card(player, hand_pos, target):
     card = player['hand'][hand_pos]
     assert card['cost'] <= player['mana'], "insufficient mana"
     del player['hand'][hand_pos]
     player['mana'] -= card['cost']
-    target['health'] -= card['damage']
-    assert target['health'] > 0, "current player wins"
+    decr_health(target, card['damage'])
 
 def play(g, hand_pos):
     play_card(active(g), hand_pos, inactive(g))
