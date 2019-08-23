@@ -29,7 +29,10 @@ def refill_mana(player):
     player['mana'] = player['mana_slots']
 
 def draw(player):
-    player['hand'].append(player['deck'].pop())
+    try:
+        player['hand'].append(player['deck'].pop())
+    except IndexError:
+        player['health'] -= 1
 
 def play_card(player, hand_pos, target):
     card = player['hand'][hand_pos]
