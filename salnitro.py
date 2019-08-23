@@ -1,17 +1,17 @@
 import random
 from os import system
 
-def mkplayer():
+def mkplayer(name):
     cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     deck = [mkcard(v) for v in cards]
     random.shuffle(deck)
-    return {'health': 30, 'mana_slots': 0, 'mana': 0, 'deck': deck, 'hand':[]}
+    return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0, 'deck': deck, 'hand':[]}
 
 def mkcard(cost):
     return {'cost': cost, 'damage': cost}
 
 def mkgame():
-    return {'players': [mkplayer(), mkplayer()], 'active': random.choice([0,1])}
+    return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1])}
 
 def active(game):
     return game['players'][game['active']]
