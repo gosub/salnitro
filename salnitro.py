@@ -34,7 +34,9 @@ def decr_health(player, amount):
 
 def draw(player):
     try:
-        player['hand'].append(player['deck'].pop())
+        card = player['deck'].pop()
+        if len(player['hand']) < 5:
+            player['hand'].append(card)
     except IndexError:
         decr_health(player, 1)
 
