@@ -81,6 +81,15 @@ def show(game):
     print()
     print(repr_player(active(game)))
 
+def ask_target(game):
+    tgts = [inactive(game), active(game)]
+    print("targets:\n  %s" % "\n  ".join(str(idx+1) + ")" + tgt['name'] for idx, tgt in enumerate(tgts)))
+    n = input('[RET=]: ').lower().strip()
+    if n == '':
+        return tgts[0]
+    else:
+        return tgts[int(n)-1]
+
 def interactive():
     g = mkgame()
     while True:
