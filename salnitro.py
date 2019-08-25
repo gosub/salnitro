@@ -3,12 +3,13 @@ from os import system
 
 def mkplayer(name):
     cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
-    deck = [mkcard(v) for v in cards]
+    deck = [mk_damage_card(v) for v in cards]
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0, 'deck': deck, 'hand':[]}
 
-def mkcard(cost):
-    return {'cost': cost, 'damage': cost}
+def mk_damage_card(cost):
+    return {'cost': cost, 'damage': cost,
+            'fx': lambda self, game: decr_health(ask_target(game), self['damage'])}
 
 def mkgame():
     return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1])}
@@ -40,15 +41,13 @@ def draw(player):
     except IndexError:
         decr_health(player, 1)
 
-def play_card(player, hand_pos, target):
+def play(g, hand_pos):
+    player = active(g)
     card = player['hand'][hand_pos]
     assert card['cost'] <= player['mana'], "insufficient mana"
     del player['hand'][hand_pos]
     player['mana'] -= card['cost']
-    decr_health(target, card['damage'])
-
-def play(g, hand_pos):
-    play_card(active(g), hand_pos, inactive(g))
+    card['fx'](card, g)
 
 def new_turn(game):
     switch_player(game)
