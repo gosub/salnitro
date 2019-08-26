@@ -9,7 +9,8 @@ def mkplayer(name):
 
 def mk_damage_card(cost):
     return {'cost': cost, 'damage': cost,
-            'fx': lambda self, game: decr_health(ask_target(game), self['damage'])}
+            'fx': lambda self, game: decr_health(ask_target(game), self['damage']),
+            'txt': "deal %d damage" % (cost)}
 
 def mk_heal_card(cost):
     return {'cost': cost, 'healing': cost,
