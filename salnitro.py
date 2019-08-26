@@ -18,7 +18,7 @@ def mk_heal_card(cost):
             'txt': "heal %d life" % (cost)}
 
 def mkgame():
-    return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1])}
+    return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]), 'msg': []}
 
 def active(game):
     return game['players'][game['active']]
@@ -43,26 +43,33 @@ def decr_health(player, amount):
     assert player['health'] > 0, "%s lost" % (player['name'])
 
 def draw(player):
+    msg = []
     try:
         card = player['deck'].pop()
         if len(player['hand']) < 5:
             player['hand'].append(card)
+        else:
+            msg.append("hand full - card discarded")
     except IndexError:
         decr_health(player, 1)
+        msg.append("no more cards - mana burnout")
+    return msg
 
 def play(g, hand_pos):
     player = active(g)
     card = player['hand'][hand_pos]
-    assert card['cost'] <= player['mana'], "insufficient mana"
-    del player['hand'][hand_pos]
-    player['mana'] -= card['cost']
-    card['fx'](card, g)
+    if card['cost'] <= player['mana']:
+        del player['hand'][hand_pos]
+        player['mana'] -= card['cost']
+        card['fx'](card, g)
+    else:
+        g['msg'].append("insufficient mana")
 
 def new_turn(game):
     switch_player(game)
     inc_mana_slot(active(game))
     refill_mana(active(game))
-    draw(active(game))
+    game['msg'] += draw(active(game))
 
 def repr_mana(p):
     mana = "♦" * p['mana']
@@ -91,6 +98,9 @@ def show(game):
     print(repr_player(inactive(game), True))
     print()
     print(repr_player(active(game)))
+    if game['msg']:
+        print("\n".join(game['msg']))
+        game['msg'] = []
 
 def ask_target(game):
     tgts = [inactive(game), active(game)]
