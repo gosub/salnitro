@@ -29,6 +29,9 @@ def inc_mana_slot(player):
 def refill_mana(player):
     player['mana'] = player['mana_slots']
 
+def incr_health(player, amount):
+    player['health'] = min(30, player['health'] + amount)
+
 def decr_health(player, amount):
     player['health'] -= amount
     assert player['health'] > 0, "%s lost" % (player['name'])
