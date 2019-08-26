@@ -11,6 +11,11 @@ def mk_damage_card(cost):
     return {'cost': cost, 'damage': cost,
             'fx': lambda self, game: decr_health(ask_target(game), self['damage'])}
 
+def mk_heal_card(cost):
+    return {'cost': cost, 'healing': cost,
+            'fx': lambda self, game: incr_health(ask_target(game), self['healing']),
+            'txt': "heal %d life" % (cost)}
+
 def mkgame():
     return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1])}
 
