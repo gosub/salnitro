@@ -83,7 +83,7 @@ def show(game):
 def ask_target(game):
     tgts = [inactive(game), active(game)]
     print("targets:\n  %s" % "\n  ".join(str(idx+1) + ")" + tgt['name'] for idx, tgt in enumerate(tgts)))
-    n = input('[RET=]: ').lower().strip()
+    n = input('[RET=1]: ').lower().strip()
     if n == '':
         return tgts[0]
     else:
