@@ -3,7 +3,7 @@ from os import system
 
 def mkplayer(name):
     cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
-    deck = [mk_damage_card(v) for v in cards]
+    deck = [random.choice([mk_damage_card, mk_heal_card])(v) for v in cards]
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0, 'deck': deck, 'hand':[]}
 
