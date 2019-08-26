@@ -70,17 +70,20 @@ def repr_mana(p):
     mana += "." * (10-p['mana_slots'])
     return mana
 
-def repr_card(c):
-    return "{%d,%d}" % (c['cost'], c['damage'])
+def repr_card(c, antagonist=False):
+    if antagonist:
+        return "[------]"
+    else:
+        return "[[%d] %s]" % (c['cost'], c['txt'])
 
-def repr_hand(p):
-    return " ".join(repr_card(c) for c in p['hand'])
+def repr_hand(p, antagonist=False):
+    return "\n".join(repr_card(c, antagonist) for c in p['hand'])
 
-def repr_player(p, inverted=False):
-    hand = repr_hand(p)
-    health_mana = "[%s][❤️%2d][%s][≣%d]" % (p['name'], p['health'], repr_mana(p), len(p['deck']))
+def repr_player(p, antagonist=False):
+    hand = repr_hand(p, antagonist)
+    health_mana = "%s  ❤️%2d  %s  ≣%d" % (p['name'], p['health'], repr_mana(p), len(p['deck']))
     lines = [hand, health_mana]
-    if inverted:
+    if antagonist:
         lines.reverse()
     return "\n".join(lines)
 
