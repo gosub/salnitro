@@ -14,7 +14,12 @@ def mkdeck():
     return deck
 
 def mk_minion_card(cost):
-    return {'type': 'minion', 'cost': cost, 'attack': cost, 'health': cost}
+    if cost == 0:
+        attack, health = 0, 1
+    else:
+        deviation = random.choice(range(-1,2))
+        attack, health = cost+deviation, cost-deviation
+    return {'type': 'minion', 'cost': cost, 'attack': attack, 'health': health}
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
