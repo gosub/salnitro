@@ -127,6 +127,8 @@ def interactive():
             cmd = input('\ncard to play [RET=pass]: ').strip().lower()
             if cmd == '' or cmd == 'pass':
                 break
+            elif cmd == 'q' or cmd == 'quit':
+                exit()
             elif all(x.isdigit() for x in cmd):
                 play(g, int(cmd))
             else:
