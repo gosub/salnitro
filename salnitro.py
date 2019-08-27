@@ -32,7 +32,8 @@ def mk_heal_card(cost):
             'txt': "heal %d life" % (cost)}
 
 def mkgame():
-    return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]), 'msg': []}
+    return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]),
+            'msg': [], 'max_hand_size': 5}
 
 def active(game):
     return game['players'][game['active']]
