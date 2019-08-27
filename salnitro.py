@@ -2,11 +2,16 @@ import random
 from os import system
 
 def mkplayer(name):
-    cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
-    deck = [random.choice([mk_damage_card, mk_heal_card])(v) for v in cards]
+    deck = mkdeck()
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'deck': deck, 'hand':[], 'discard':[]}
+
+def mkdeck():
+    values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
+    cards = [mk_damage_card, mk_heal_card]
+    deck = [random.choice(cards)(v) for v in values]
+    return deck
 
 def mk_minion_card(cost):
     return {'type': 'minion', 'cost': cost, 'attack': cost, 'health': cost}
