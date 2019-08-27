@@ -5,7 +5,8 @@ def mkplayer(name):
     cards = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     deck = [random.choice([mk_damage_card, mk_heal_card])(v) for v in cards]
     random.shuffle(deck)
-    return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0, 'deck': deck, 'hand':[]}
+    return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
+            'deck': deck, 'hand':[], 'discard':[]}
 
 def mk_damage_card(cost):
     return {'cost': cost, 'damage': cost,
@@ -50,6 +51,7 @@ def draw(player):
             player['hand'].append(card)
         else:
             msg.append("hand full - card discarded")
+            player['discard'].append(card)
     except IndexError:
         decr_health(player, 1)
         msg.append("no more cards - mana burnout")
@@ -62,6 +64,7 @@ def play(g, hand_pos):
         del player['hand'][hand_pos]
         player['mana'] -= card['cost']
         card['fx'](card, g)
+        player['discard'].append(card)
     else:
         g['msg'].append("insufficient mana")
 
@@ -88,7 +91,7 @@ def repr_hand(p, antagonist=False):
 
 def repr_player(p, antagonist=False):
     hand = repr_hand(p, antagonist)
-    health_mana = "%s  ❤️%2d  %s  ≣%d" % (p['name'], p['health'], repr_mana(p), len(p['deck']))
+    health_mana = "%s  ❤️%2d  %s  ≣%d  ♲%d" % (p['name'], p['health'], repr_mana(p), len(p['deck']), len(p['discard']))
     lines = [hand, health_mana]
     if antagonist:
         lines.reverse()
