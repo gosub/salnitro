@@ -8,6 +8,9 @@ def mkplayer(name):
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'deck': deck, 'hand':[], 'discard':[]}
 
+def mk_minion_card(cost):
+    return {'type': 'minion', 'cost': cost, 'attack': cost, 'health': cost}
+
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
             'fx': lambda self, game: decr_health(ask_target(game), self['damage']),
