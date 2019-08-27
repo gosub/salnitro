@@ -56,19 +56,17 @@ def decr_health(player, amount):
     player['health'] -= amount
     assert player['health'] > 0, "%s lost" % (player['name'])
 
-def draw(player):
-    msg = []
+def draw(game, player):
     try:
         card = player['deck'].pop()
-        if len(player['hand']) < 5:
+        if len(player['hand']) < game['max_hand_size']:
             player['hand'].append(card)
         else:
-            msg.append("hand full - card discarded")
+            game['msg'].append("hand full - card discarded")
             player['discard'].append(card)
     except IndexError:
         decr_health(player, 1)
-        msg.append("no more cards - mana burnout")
-    return msg
+        game['msg'].append("no more cards - mana burnout")
 
 def play(g, hand_pos):
     player = active(g)
@@ -85,7 +83,7 @@ def new_turn(game):
     switch_player(game)
     inc_mana_slot(active(game))
     refill_mana(active(game))
-    game['msg'] += draw(active(game))
+    draw(game, active(game))
 
 def repr_mana(p):
     mana = "♦" * p['mana']
