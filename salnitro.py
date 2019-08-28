@@ -105,7 +105,9 @@ def repr_card(c, antagonist=False):
     elif c['type'] == 'spell':
         return "[[%d] %s]" % (c['cost'], c['txt'])
     elif c['type'] == 'minion':
-        return "[[%d] %s [%d/%d]]" % (c['cost'], c['name'], c['attack'], c['health'])
+        return "[[%d] %s %s[%d/%d]]" % (c['cost'], c['name'],
+                    'zZzZ' if 'exhausted' in c and c['exhausted'] else '',
+                    c['attack'], c['health'])
     else:
         raise Exception('unknow card type %s' % (c['type']))
 
