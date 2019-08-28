@@ -76,8 +76,14 @@ def play(g, hand_pos):
     if card['cost'] <= player['mana']:
         del player['hand'][hand_pos]
         player['mana'] -= card['cost']
-        card['fx'](card, g)
-        player['discard'].append(card)
+        if card['type'] == 'spell':
+            card['fx'](card, g)
+            player['discard'].append(card)
+        elif card['type'] == 'minion':
+            card['exhausted'] = True
+            player['field'].append(card)
+        else:
+            raise Exception('unknow card type %s' % (card['type']))
     else:
         g['msg'].append("insufficient mana")
 
