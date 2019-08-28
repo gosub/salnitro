@@ -117,7 +117,7 @@ def repr_hand(p, antagonist=False):
 def repr_player(p, antagonist=False):
     hand = repr_hand(p, antagonist)
     health_mana = "%s  ❤️%2d  %s  ≣%d  ♲%d" % (p['name'], p['health'], repr_mana(p), len(p['deck']), len(p['discard']))
-    lines = [hand, health_mana]
+    lines = [hand, "", health_mana]
     if antagonist:
         lines.reverse()
     return "\n".join(lines)
