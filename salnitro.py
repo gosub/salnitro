@@ -9,7 +9,7 @@ def mkplayer(name):
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
-    cards = [mk_damage_card, mk_heal_card]
+    cards = [mk_damage_card, mk_heal_card, mk_minion_card]
     deck = [random.choice(cards)(v) for v in values]
     return deck
 
