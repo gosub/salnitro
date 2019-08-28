@@ -112,7 +112,7 @@ def repr_card(c, antagonist=False):
         raise Exception('unknow card type %s' % (c['type']))
 
 def repr_hand(p, antagonist=False):
-    return "\n".join(repr_card(c, antagonist) for c in p['hand'])
+    return "\n".join(" "*n + repr_card(c, antagonist) for n, c in enumerate(p['hand']))
 
 def repr_player(p, antagonist=False):
     hand = repr_hand(p, antagonist)
