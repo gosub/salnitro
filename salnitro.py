@@ -96,8 +96,12 @@ def repr_mana(p):
 def repr_card(c, antagonist=False):
     if antagonist:
         return "[------]"
-    else:
+    elif c['type'] == 'spell':
         return "[[%d] %s]" % (c['cost'], c['txt'])
+    elif c['type'] == 'minion':
+        return "[[%d] %s [%d/%d]]" % (c['cost'], c['name'], c['attack'], c['health'])
+    else:
+        raise Exception('unknow card type %s' % (c['type']))
 
 def repr_hand(p, antagonist=False):
     return "\n".join(repr_card(c, antagonist) for c in p['hand'])
