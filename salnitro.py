@@ -5,7 +5,7 @@ def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
-            'deck': deck, 'hand':[], 'discard':[]}
+            'field': [], 'deck': deck, 'hand':[], 'discard':[]}
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
