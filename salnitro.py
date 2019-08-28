@@ -19,7 +19,8 @@ def mk_minion_card(cost):
     else:
         deviation = random.choice(range(-1,2))
         attack, health = cost+deviation, cost-deviation
-    return {'type': 'minion', 'cost': cost, 'attack': attack, 'health': health}
+    return {'type': 'minion', 'name': 'minion',
+            'cost': cost, 'attack': attack, 'health': health}
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
