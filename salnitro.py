@@ -1,6 +1,16 @@
 import random
 from os import system
 
+# TODO: remove exhaustion after turn end
+# TODO: draw cards in player field
+# TODO: max_field_size in game
+# TODO: respect max_field_size when card played
+# TODO: draw player along all 80 chars
+# TODO: draw hand centered in 80 chars
+# TODO: catch IndexError when playing wrong index
+# TODO: add attack function
+# TODO: add attack command to interactive
+
 def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
