@@ -77,7 +77,7 @@ def draw(game, player):
             player['discard'].append(card)
     except IndexError:
         decr_health(player, 1)
-        game['msg'].append("no more cards - mana burnout")
+        game['msg'].append("no more cards - burnout")
 
 def play(g, hand_pos):
     player = active(g)
