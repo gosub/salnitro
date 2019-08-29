@@ -7,7 +7,6 @@ from os import system
 # TODO: respect max_field_size when card played
 # TODO: draw player along all 80 chars
 # TODO: draw hand centered in 80 chars
-# TODO: catch IndexError when playing wrong index
 # TODO: add attack function
 # TODO: add attack command to interactive
 
@@ -164,7 +163,10 @@ def interactive():
             elif cmd == 'q' or cmd == 'quit':
                 exit()
             elif all(x.isdigit() for x in cmd):
-                play(g, int(cmd))
+                try:
+                    play(g, int(cmd))
+                except IndexError:
+                    pass
             else:
                 print("command not recognized")
 
