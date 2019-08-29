@@ -125,6 +125,8 @@ def repr_player(p, antagonist=False):
 def show(game):
     print(repr_player(inactive(game), True))
     print()
+    print('+'*80)
+    print()
     print(repr_player(active(game)))
     if game['msg']:
         print("\n".join(game['msg']))
