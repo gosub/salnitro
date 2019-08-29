@@ -9,6 +9,7 @@ from os import system
 # TODO: draw hand centered in 80 chars
 # TODO: add attack function
 # TODO: add attack command to interactive
+# TODO: increase Burnout damage for every card not drawn
 
 def mkplayer(name):
     deck = mkdeck()
