@@ -103,6 +103,11 @@ def new_turn(game):
     refill_mana(active(game))
     draw(game, active(game))
 
+def remove_exhaustion(player):
+    for card in player['field']:
+        if 'exhausted' in card:
+            del card['exhausted']
+
 def repr_mana(p):
     mana = "♦" * p['mana']
     mana += "♢" * (p['mana_slots'] - p['mana'])
