@@ -1,7 +1,6 @@
 import random
 from os import system
 
-# TODO: max_field_size in game
 # TODO: respect max_field_size when card played
 # TODO: draw player along all 80 chars
 # TODO: draw hand centered in 80 chars
@@ -44,7 +43,7 @@ def mk_heal_card(cost):
 
 def mkgame():
     return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]),
-            'msg': [], 'max_hand_size': 5}
+            'msg': [], 'max_hand_size': 5, 'max_field_size': 3}
 
 def active(game):
     return game['players'][game['active']]
