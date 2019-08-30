@@ -67,6 +67,18 @@ def decr_health(player, amount):
     player['health'] -= amount
     assert player['health'] > 0, "%s lost" % (player['name'])
 
+class NotEnoughMana(Exception):
+    pass
+
+class HandMaxxed(Exception):
+    pass
+
+class FieldMaxxed(Exception):
+    pass
+
+class EmptyDeck(Exception):
+    pass
+
 def draw(game, player):
     try:
         card = player['deck'].pop()
