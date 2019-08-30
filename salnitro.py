@@ -81,15 +81,18 @@ class EmptyDeck(Exception):
 
 def draw(game, player):
     try:
+        if len(player['deck']) <= 0:
+            raise EmptyDeck
         card = player['deck'].pop()
-        if len(player['hand']) < game['max_hand_size']:
-            player['hand'].append(card)
-        else:
+        if len(player['hand']) >= game['max_hand_size']:
+            raise HandMaxxed
+        player['hand'].append(card)
+    except HandMaxxed:
             game['msg'].append("hand full - card discarded")
             player['discard'].append(card)
-    except IndexError:
-        decr_health(player, 1)
+    except EmptyDeck:
         game['msg'].append("no more cards - burnout")
+        decr_health(player, 1)
 
 def play(g, hand_pos):
     player = active(g)
