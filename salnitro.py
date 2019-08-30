@@ -1,7 +1,6 @@
 import random
 from os import system
 
-# TODO: respect max_field_size when card played
 # TODO: draw player along all 80 chars
 # TODO: draw hand centered in 80 chars
 # TODO: add attack function
@@ -97,19 +96,32 @@ def draw(game, player):
 def play(g, hand_pos):
     player = active(g)
     card = player['hand'][hand_pos]
-    if card['cost'] <= player['mana']:
-        del player['hand'][hand_pos]
+    typ = card['type']
+    try:
+        if card['cost'] > player['mana']:
+            raise NotEnoughMana
+        if typ == 'minion' and len(player['field']) >= g['max_field_size']:
+            raise FieldMaxxed
         player['mana'] -= card['cost']
-        if card['type'] == 'spell':
-            card['fx'](card, g)
-            player['discard'].append(card)
-        elif card['type'] == 'minion':
-            card['exhausted'] = True
-            player['field'].append(card)
+        del player['hand'][hand_pos]
+        if typ == 'spell':
+            play_spell(g, player, card)
+        elif typ == 'minion':
+            play_minion(g, player, card)
         else:
             raise Exception('unknow card type %s' % (card['type']))
-    else:
+    except NotEnoughMana:
         g['msg'].append("insufficient mana")
+    except FieldMaxxed:
+        g['msg'].append("field is full")
+
+def play_spell(g, player, card):
+    card['fx'](card, g)
+    player['discard'].append(card)
+
+def play_minion(g, player, card):
+    card['exhausted'] = True
+    player['field'].append(card)
 
 def new_turn(game):
     switch_player(game)
