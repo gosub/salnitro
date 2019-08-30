@@ -1,7 +1,6 @@
 import random
 from os import system
 
-# TODO: remove exhaustion after turn end
 # TODO: draw cards in player field
 # TODO: max_field_size in game
 # TODO: respect max_field_size when card played
@@ -103,6 +102,10 @@ def new_turn(game):
     refill_mana(active(game))
     draw(game, active(game))
 
+def end_turn(game):
+    player = active(game)
+    remove_exhaustion(player)
+
 def remove_exhaustion(player):
     for card in player['field']:
         if 'exhausted' in card:
@@ -165,6 +168,7 @@ def interactive():
             show(g)
             cmd = input('\ncard to play [RET=pass]: ').strip().lower()
             if cmd == '' or cmd == 'pass':
+                end_turn(g)
                 break
             elif cmd == 'q' or cmd == 'quit':
                 exit()
