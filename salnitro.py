@@ -8,6 +8,8 @@ from os import system
 # TODO: add attack function
 # TODO: add attack command to interactive
 # TODO: increase Burnout damage for every card not drawn
+# TODO: make minions targettable
+# TODO: manage damaging and healing minions
 
 def mkplayer(name):
     deck = mkdeck()
