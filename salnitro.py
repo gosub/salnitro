@@ -178,7 +178,7 @@ def width():
 def show(game):
     print(repr_player(inactive(game), True))
     print()
-    print('+'*80)
+    print('+'*width())
     print()
     print(repr_player(active(game)))
     if game['msg']:
