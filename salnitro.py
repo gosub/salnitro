@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: draw player along all 80 chars
 # TODO: add attack function
 # TODO: add attack command to interactive
 # TODO: increase Burnout damage for every card not drawn
@@ -157,7 +156,7 @@ def repr_card(c, antagonist=False):
         raise Exception('unknow card type %s' % (c['type']))
 
 def repr_field(p, antagonist):
-    return " ".join(repr_card(c, antagonist) for c in p['field'])
+    return "  ".join(repr_card(c, antagonist) for c in p['field']).center(width())
 
 def repr_hand(p, antagonist=False):
     cards = [repr_card(c, antagonist) for c in p['hand']]
