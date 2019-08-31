@@ -219,7 +219,7 @@ def interactive():
                 exit()
             elif all(x.isdigit() for x in cmd):
                 try:
-                    play(g, int(cmd))
+                    play(g, int(cmd)-1)
                 except IndexError:
                     pass
             else:
