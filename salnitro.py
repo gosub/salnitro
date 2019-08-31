@@ -139,10 +139,11 @@ def remove_exhaustion(player):
             del card['exhausted']
 
 def repr_mana(p):
+    txt = "%d/%d " % (p['mana'], p['mana_slots'])
     mana = "♦" * p['mana']
     mana += "♢" * (p['mana_slots'] - p['mana'])
     mana += "." * (10-p['mana_slots'])
-    return mana
+    return txt + mana
 
 def repr_card(c, antagonist=False):
     if antagonist:
