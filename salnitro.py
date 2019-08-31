@@ -176,7 +176,8 @@ def repr_player(p, antagonist=False):
     field = repr_field(p, antagonist)
     hand = repr_hand(p, antagonist)
     bar = repr_status(p, antagonist)
-    lines = [field, "", "", hand, "", health_mana]
+    empty = ""
+    lines = [field, empty, empty, hand, empty, bar]
     if antagonist:
         lines.reverse()
     return "\n".join(lines)
