@@ -3,7 +3,6 @@ from os import system, get_terminal_size
 
 # TODO: add attack function
 # TODO: add attack command to interactive
-# TODO: increase Burnout damage for every card not drawn
 # TODO: make minions targettable
 # TODO: manage damaging and healing minions
 
@@ -11,7 +10,8 @@ def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
-            'field': [], 'deck': deck, 'hand':[], 'discard':[]}
+            'field': [], 'deck': deck, 'hand':[], 'discard':[],
+            'burnout': 1}
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
@@ -88,8 +88,9 @@ def draw(game, player):
             game['msg'].append("hand full - card discarded")
             player['discard'].append(card)
     except EmptyDeck:
-        game['msg'].append("no more cards - burnout")
-        decr_health(player, 1)
+        game['msg'].append("no more cards - burnout -%d" % player['burnout'])
+        decr_health(player, player['burnout'])
+        player['burnout'] += 1
 
 def play(g, hand_pos):
     player = active(g)
