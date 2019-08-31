@@ -1,5 +1,5 @@
 import random
-from os import system
+from os import system, get_terminal_size
 
 # TODO: draw player along all 80 chars
 # TODO: draw hand centered in 80 chars
@@ -170,6 +170,9 @@ def repr_player(p, antagonist=False):
     if antagonist:
         lines.reverse()
     return "\n".join(lines)
+
+def width():
+   return get_terminal_size().columns
 
 def show(game):
     print(repr_player(inactive(game), True))
