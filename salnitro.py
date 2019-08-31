@@ -165,11 +165,18 @@ def repr_hand(p, antagonist=False):
     left_align = (width()-10)//2
     return "\n".join(" "*left_align + c for c in indented)
 
+def repr_status(p, antagonist):
+    name = p['name']
+    health = "❤️" + str(p['health'])
+    mana = repr_mana(p)
+    deck_size = "≣" + str(len(p['deck']))
+    discard_size = "♲" + str(len(p['discard']))
+    return (" "*4).join([name, health, mana, deck_size, discard_size]).center(width())
 
 def repr_player(p, antagonist=False):
     field = repr_field(p, antagonist)
     hand = repr_hand(p, antagonist)
-    health_mana = "%s  ❤️%2d  %s  ≣%d  ♲%d" % (p['name'], p['health'], repr_mana(p), len(p['deck']), len(p['discard']))
+    bar = repr_status(p, antagonist)
     lines = [field, "", "", hand, "", health_mana]
     if antagonist:
         lines.reverse()
