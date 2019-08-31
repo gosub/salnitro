@@ -4,14 +4,13 @@ from os import system, get_terminal_size
 # TODO: add attack function
 # TODO: add attack command to interactive
 # TODO: make minions targettable
-# TODO: manage damaging and healing minions
 
 def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'field': [], 'deck': deck, 'hand':[], 'discard':[],
-            'burnout': 1}
+            'damage': 0, 'burnout': 1, 'type': 'player'}
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
@@ -26,16 +25,17 @@ def mk_minion_card(cost):
         deviation = random.choice(range(-1,2))
         attack, health = cost+deviation, cost-deviation
     return {'type': 'minion', 'name': 'minion',
-            'cost': cost, 'attack': attack, 'health': health}
+            'cost': cost, 'attack': attack, 'health': health,
+            'damage': 0}
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
-            'fx': lambda self, game: decr_health(ask_target(game), self['damage']),
+            'fx': lambda self, game: deal_damage(game, ask_target(game), self['damage']),
             'txt': "deal %d damage" % (cost)}
 
 def mk_heal_card(cost):
     return {'type': 'spell', 'cost': cost, 'healing': cost,
-            'fx': lambda self, game: incr_health(ask_target(game), self['healing']),
+            'fx': lambda self, game: heal(ask_target(game), self['healing']),
             'txt': "heal %d life" % (cost)}
 
 def mkgame():
@@ -57,12 +57,29 @@ def inc_mana_slot(player):
 def refill_mana(player):
     player['mana'] = player['mana_slots']
 
-def incr_health(player, amount):
-    player['health'] = min(30, player['health'] + amount)
+def heal(target, amount):
+    target['damage'] = max(0, target['damage'] - amount)
 
-def decr_health(player, amount):
-    player['health'] -= amount
-    assert player['health'] > 0, "%s lost" % (player['name'])
+def deal_damage(game, target, amount):
+    target['damage'] += amount
+    if target['health'] - target['damage'] <= 0:
+        if target['type'] == 'player':
+            raise Dead(target)
+        elif target['type'] == 'minion':
+            kill_minion(game, target)
+
+def kill_minion(game, minion):
+    for player in game['players']:
+        try:
+            position = list(id(c) for c in player['field']).index(id(minion))
+            card = player['field'][position]
+            del player['field'][position]
+            player['discard'].append(card)
+        except ValueError:
+            pass
+
+class Dead(Exception):
+    pass
 
 class NotEnoughMana(Exception):
     pass
@@ -89,7 +106,7 @@ def draw(game, player):
             player['discard'].append(card)
     except EmptyDeck:
         game['msg'].append("no more cards - burnout -%d" % player['burnout'])
-        decr_health(player, player['burnout'])
+        deal_damage(game, player, player['burnout'])
         player['burnout'] += 1
 
 def play(g, hand_pos):
@@ -152,7 +169,7 @@ def repr_card(c, antagonist=False):
     elif c['type'] == 'minion':
         return "[[%d] %s %s[%d/%d]]" % (c['cost'], c['name'],
                     'zZzZ' if 'exhausted' in c and c['exhausted'] else '',
-                    c['attack'], c['health'])
+                    c['attack'], c['health']-c['damage'])
     else:
         raise Exception('unknow card type %s' % (c['type']))
 
@@ -167,7 +184,7 @@ def repr_hand(p, antagonist=False):
 
 def repr_status(p, antagonist):
     name = p['name']
-    health = "❤️" + str(p['health'])
+    health = "❤️" + str(p['health']-p['damage'])
     mana = repr_mana(p)
     deck_size = "≣" + str(len(p['deck']))
     discard_size = "♲" + str(len(p['discard']))
@@ -207,25 +224,28 @@ def ask_target(game):
 
 def interactive():
     g = mkgame()
-    while True:
-        new_turn(g)
+    try:
         while True:
-            system('clear')
-            show(g)
-            cmd = input('\ncard to play [RET=pass]: ').strip().lower()
-            if cmd == '' or cmd == 'pass':
-                end_turn(g)
-                break
-            elif cmd == 'q' or cmd == 'quit':
-                exit()
-            elif all(x.isdigit() for x in cmd):
-                try:
-                    play(g, int(cmd)-1)
-                except IndexError:
-                    pass
-            else:
-                print("command not recognized")
-
+            new_turn(g)
+            while True:
+                system('clear')
+                show(g)
+                cmd = input('\ncard to play [RET=pass]: ').strip().lower()
+                if cmd == '' or cmd == 'pass':
+                    end_turn(g)
+                    break
+                elif cmd == 'q' or cmd == 'quit':
+                    exit()
+                elif all(x.isdigit() for x in cmd):
+                    try:
+                        play(g, int(cmd)-1)
+                    except IndexError:
+                        pass
+                else:
+                    print("command not recognized")
+    except Dead as d:
+        player, = d.args
+        print("player %s has lost" % player['name'])
 
 if __name__ == "__main__":
     interactive()
