@@ -194,7 +194,7 @@ def repr_status(p, antagonist):
     return (" "*4).join([name, health, mana, deck_size, discard_size]).center(width())
 
 def repr_player(p, antagonist=False):
-    field = repr_field(p, antagonist)
+    field = repr_field(p, False)
     hand = repr_hand(p, antagonist)
     bar = repr_status(p, antagonist)
     empty = ""
