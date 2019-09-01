@@ -21,6 +21,9 @@ def mkdeck():
 def mk_minion_card(cost):
     if cost == 0:
         attack, health = 0, 1
+    elif cost == 1:
+        deviation = random.choice(range(-1,1))
+        attack, health = cost+deviation, cost-deviation
     else:
         deviation = random.choice(range(-1,2))
         attack, health = cost+deviation, cost-deviation
