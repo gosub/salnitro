@@ -3,7 +3,6 @@ from os import system, get_terminal_size
 
 # TODO: add attack function
 # TODO: add attack command to interactive
-# TODO: make minions targettable
 
 def mkplayer(name):
     deck = mkdeck()
@@ -217,8 +216,17 @@ def show(game):
         game['msg'] = []
 
 def ask_target(game):
-    tgts = [inactive(game), active(game)]
-    print("targets:\n  %s" % "\n  ".join(str(idx+1) + ")" + tgt['name'] for idx, tgt in enumerate(tgts)))
+    def tgt_repr(t):
+        if t['type'] == 'player':
+            return t['name']
+        elif t['type'] == 'minion':
+            return repr_card(t)
+    tgts = [inactive(game)]
+    tgts += [m for m in inactive(game)['field'] if m['type']=='minion']
+    tgts.append(active(game))
+    tgts += [m for m in active(game)['field'] if m['type']=='minion']
+    print("targets:")
+    print("\n".join(str(idx+1) + ") " + tgt_repr(tgt) for idx, tgt in enumerate(tgts)))
     n = input('[RET=1]: ').lower().strip()
     if n == '':
         return tgts[0]
