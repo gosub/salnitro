@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: add attack function
 # TODO: add attack command to interactive
 
 def mkplayer(name):
@@ -110,6 +109,15 @@ def draw(game, player):
         game['msg'].append("no more cards - burnout -%d" % player['burnout'])
         deal_damage(game, player, player['burnout'])
         player['burnout'] += 1
+
+def attack(game, attacker, defender):
+    dmg1 = attacker['attack']
+    if defender['type'] == 'minion':
+        dmg2 = defender['attack']
+        deal_damage(game, defender, dmg1)
+        deal_damage(game, attacker, dmg2)
+    elif defender['type'] == 'player':
+        deal_damage(game, defender, dmg1)
 
 def play(g, hand_pos):
     player = active(g)
