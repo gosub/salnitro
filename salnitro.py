@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: add attack command to interactive
 
 def mkplayer(name):
     deck = mkdeck()
@@ -223,6 +222,32 @@ def show(game):
         print("\n".join(game['msg']))
         game['msg'] = []
 
+def ask_attacker(game):
+    tgts = [m for m in active(game)['field'] if m['type'] == 'minion' and not 'exhausted' in m]
+    print("attack with:")
+    print("\n".join(str(idx+1) + ") " + repr_card(tgt) for idx, tgt in enumerate(tgts)))
+    n = input('[RET=1]: ').lower().strip()
+    if n == '':
+        return tgts[0]
+    else:
+        return tgts[int(n)-1]
+
+def ask_defender(game):
+    def tgt_repr(t):
+        if t['type'] == 'player':
+            return t['name']
+        elif t['type'] == 'minion':
+            return repr_card(t)
+    tgts = [inactive(game)]
+    tgts += [m for m in inactive(game)['field'] if m['type'] == 'minion']
+    print("select target:")
+    print("\n".join(str(idx+1) + ") " + tgt_repr(tgt) for idx, tgt in enumerate(tgts)))
+    n = input('[RET=1]: ').lower().strip()
+    if n == '':
+        return tgts[0]
+    else:
+        return tgts[int(n)-1]
+
 def ask_target(game):
     def tgt_repr(t):
         if t['type'] == 'player':
@@ -253,6 +278,8 @@ def interactive():
                 if cmd == '' or cmd == 'pass':
                     end_turn(g)
                     break
+                elif cmd == 'a' or cmd == 'attack':
+                    attack(g, ask_attacker(g), ask_defender(g))
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif all(x.isdigit() for x in cmd):
