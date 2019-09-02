@@ -1,6 +1,12 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: allow only one attack for turn
+# TODO: unify ask_target, ask_attacker, ask_defender
+# TODO: manage when there are no possible targets
+# TODO: allow cancelling action when selecting target
+# TODO: add help command to interactive
+# TODO: add find_card function (returns field and position)
 
 def mkplayer(name):
     deck = mkdeck()
