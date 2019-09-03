@@ -243,6 +243,8 @@ def show(game):
 def ask_target(game, subset=None):
     repr = {'player': lambda p: p['name'], 'minion': repr_card}
     filt = {'attacker': can_attack, 'defender': can_defend, None: lambda x: True}
+    prompt = {'attacker': "select attacker:", 'defender': "select defender:",
+        None: "select target:"}
     a = inactive(game)
     aaa = [m for m in a['field'] if filt[subset](m)]
     b = active(game)
@@ -258,7 +260,7 @@ def ask_target(game, subset=None):
         tgts += aaa
         tgts.append(b)
         tgts += bbb
-    print("targets:")
+    print(prompt[subset])
     print("\n".join(str(idx+1) + ") " + repr[tgt['type']](tgt)
         for idx, tgt in enumerate(tgts)))
     n = input('[RET=1]: ').lower().strip()
