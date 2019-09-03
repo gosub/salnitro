@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: allow only one attack for turn
 # TODO: unify ask_target, ask_attacker, ask_defender
 # TODO: manage when there are no possible targets
 # TODO: allow cancelling action when selecting target
@@ -32,7 +31,7 @@ def mk_minion_card(cost):
         attack, health = cost+deviation, cost-deviation
     return {'type': 'minion', 'name': 'minion',
             'cost': cost, 'attack': attack, 'health': health,
-            'damage': 0}
+            'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0}
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
@@ -115,6 +114,11 @@ def draw(game, player):
         deal_damage(game, player, player['burnout'])
         player['burnout'] += 1
 
+def can_attack(entity):
+    return entity['type'] == 'minion' \
+        and not 'exhausted' in entity \
+        and entity['attacks_this_turn'] < entity['max_attacks']
+
 def attack(game, attacker, defender):
     dmg1 = attacker['attack']
     if defender['type'] == 'minion':
@@ -123,6 +127,7 @@ def attack(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
+    attacker['attacks_this_turn'] += 1
 
 def play(g, hand_pos):
     player = active(g)
@@ -163,11 +168,16 @@ def new_turn(game):
 def end_turn(game):
     player = active(game)
     remove_exhaustion(player)
+    reset_attack_count(player)
 
 def remove_exhaustion(player):
     for card in player['field']:
         if 'exhausted' in card:
             del card['exhausted']
+
+def reset_attack_count(player):
+    for e in player['field']:
+        e['attacks_this_turn'] = 0
 
 def repr_mana(p):
     txt = "%d/%d " % (p['mana'], p['mana_slots'])
@@ -229,7 +239,7 @@ def show(game):
         game['msg'] = []
 
 def ask_attacker(game):
-    tgts = [m for m in active(game)['field'] if m['type'] == 'minion' and not 'exhausted' in m]
+    tgts = [m for m in active(game)['field'] if can_attack(m)]
     print("attack with:")
     print("\n".join(str(idx+1) + ") " + repr_card(tgt) for idx, tgt in enumerate(tgts)))
     n = input('[RET=1]: ').lower().strip()
