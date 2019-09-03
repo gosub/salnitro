@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: unify ask_target, ask_attacker, ask_defender
 # TODO: manage when there are no possible targets
 # TODO: allow cancelling action when selecting target
 # TODO: add help command to interactive
@@ -118,6 +117,9 @@ def can_attack(entity):
     return entity['type'] == 'minion' \
         and not 'exhausted' in entity \
         and entity['attacks_this_turn'] < entity['max_attacks']
+
+def can_defend(entity):
+    return entity['type'] == 'minion'
 
 def attack(game, attacker, defender):
     dmg1 = attacker['attack']
@@ -238,44 +240,27 @@ def show(game):
         print("\n".join(game['msg']))
         game['msg'] = []
 
-def ask_attacker(game):
-    tgts = [m for m in active(game)['field'] if can_attack(m)]
-    print("attack with:")
-    print("\n".join(str(idx+1) + ") " + repr_card(tgt) for idx, tgt in enumerate(tgts)))
-    n = input('[RET=1]: ').lower().strip()
-    if n == '':
-        return tgts[0]
+def ask_target(game, subset=None):
+    repr = {'player': lambda p: p['name'], 'minion': repr_card}
+    filt = {'attacker': can_attack, 'defender': can_defend, None: lambda x: True}
+    a = inactive(game)
+    aaa = [m for m in a['field'] if filt[subset](m)]
+    b = active(game)
+    bbb = [m for m in b['field'] if filt[subset](m)]
+    tgts = []
+    if subset == 'attacker':
+        tgts += bbb
+    elif subset == 'defender':
+        tgts.append(a)
+        tgts += aaa
     else:
-        return tgts[int(n)-1]
-
-def ask_defender(game):
-    def tgt_repr(t):
-        if t['type'] == 'player':
-            return t['name']
-        elif t['type'] == 'minion':
-            return repr_card(t)
-    tgts = [inactive(game)]
-    tgts += [m for m in inactive(game)['field'] if m['type'] == 'minion']
-    print("select target:")
-    print("\n".join(str(idx+1) + ") " + tgt_repr(tgt) for idx, tgt in enumerate(tgts)))
-    n = input('[RET=1]: ').lower().strip()
-    if n == '':
-        return tgts[0]
-    else:
-        return tgts[int(n)-1]
-
-def ask_target(game):
-    def tgt_repr(t):
-        if t['type'] == 'player':
-            return t['name']
-        elif t['type'] == 'minion':
-            return repr_card(t)
-    tgts = [inactive(game)]
-    tgts += [m for m in inactive(game)['field'] if m['type']=='minion']
-    tgts.append(active(game))
-    tgts += [m for m in active(game)['field'] if m['type']=='minion']
+        tgts.append(a)
+        tgts += aaa
+        tgts.append(b)
+        tgts += bbb
     print("targets:")
-    print("\n".join(str(idx+1) + ") " + tgt_repr(tgt) for idx, tgt in enumerate(tgts)))
+    print("\n".join(str(idx+1) + ") " + repr[tgt['type']](tgt)
+        for idx, tgt in enumerate(tgts)))
     n = input('[RET=1]: ').lower().strip()
     if n == '':
         return tgts[0]
@@ -295,7 +280,7 @@ def interactive():
                     end_turn(g)
                     break
                 elif cmd == 'a' or cmd == 'attack':
-                    attack(g, ask_attacker(g), ask_defender(g))
+                    attack(g, ask_target(g, 'attacker'), ask_target(g, 'defender'))
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif all(x.isdigit() for x in cmd):
