@@ -1,8 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: manage when there are no possible targets
-# TODO: allow cancelling action when selecting target
 # TODO: add help command to interactive
 # TODO: add find_card function (returns field and position)
 
@@ -260,12 +258,16 @@ def ask_target(game, subset=None):
         tgts += aaa
         tgts.append(b)
         tgts += bbb
+    if not tgts:
+        return None
     print(prompt[subset])
     print("\n".join(str(idx+1) + ") " + repr[tgt['type']](tgt)
         for idx, tgt in enumerate(tgts)))
     n = input('[RET=1]: ').lower().strip()
     if n == '':
         return tgts[0]
+    elif n == 'q' or n == 'quit':
+        return None
     else:
         return tgts[int(n)-1]
 
@@ -282,7 +284,10 @@ def interactive():
                     end_turn(g)
                     break
                 elif cmd == 'a' or cmd == 'attack':
-                    attack(g, ask_target(g, 'attacker'), ask_target(g, 'defender'))
+                    att = ask_target(g, 'attacker')
+                    defe = ask_target(g, 'defender')
+                    if not att is None and not defe is None:
+                        attack(g, att, defe)
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif all(x.isdigit() for x in cmd):
