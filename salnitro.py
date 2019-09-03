@@ -3,6 +3,7 @@ from os import system, get_terminal_size
 
 # TODO: add help command to interactive
 # TODO: add find_card function (returns field and position)
+# TODO: manage no target/abort action during card play (not attack)
 
 def mkplayer(name):
     deck = mkdeck()
