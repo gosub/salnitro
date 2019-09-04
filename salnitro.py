@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: add help command to interactive
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
 
@@ -291,6 +290,9 @@ def interactive():
                         attack(g, att, defe)
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
+                elif cmd == 'h' or cmd == 'help':
+                    g['msg'] += ["", "1-%d - play card N from hand" % (g['max_hand_size']),
+                                 "a - attack", "h - help", "q - quit", "RET - pass turn"]
                 elif all(x.isdigit() for x in cmd):
                     try:
                         play(g, int(cmd)-1)
