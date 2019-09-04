@@ -1,9 +1,11 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: implement "draw N cards"
+# TODO: implement "opponent discards N cards"
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
-# TODO: implement first card
+# TODO: implement first real card
 
 def mkplayer(name):
     deck = mkdeck()
