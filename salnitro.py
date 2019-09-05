@@ -2,6 +2,7 @@ import random
 from os import system, get_terminal_size
 
 # TODO: implement "opponent discards N cards"
+# TODO: generate decks where values are costs from a collection of cards
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
 # TODO: implement first real card
