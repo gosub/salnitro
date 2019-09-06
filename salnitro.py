@@ -125,6 +125,12 @@ def random_hand_card(game, player):
     else:
         return random.randint(0, len(player['hand'])-1)
 
+def discard(game, player, hand_pos):
+    if not hand_pos is None:
+        card = player['hand'][hand_pos]
+        del player['hand'][hand_pos]
+        player['discard'].append(card)
+
 def can_attack(entity):
     return entity['type'] == 'minion' \
         and not 'exhausted' in entity \
