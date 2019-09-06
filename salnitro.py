@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: implement "opponent discards N cards"
 # TODO: generate decks where values are costs from a collection of cards
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
@@ -16,7 +15,7 @@ def mkplayer(name):
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
-    cards = [mk_damage_card, mk_heal_card, mk_minion_card, mk_draw_card]
+    cards = [mk_damage_card, mk_heal_card, mk_minion_card, mk_draw_card, mk_discard_card]
     deck = [random.choice(cards)(v) for v in values]
     return deck
 
