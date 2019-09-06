@@ -119,6 +119,12 @@ def draw(game, player):
         deal_damage(game, player, player['burnout'])
         player['burnout'] += 1
 
+def random_hand_card(game, player):
+    if len(player['hand']) <= 0:
+        return None
+    else:
+        return random.randint(0, len(player['hand'])-1)
+
 def can_attack(entity):
     return entity['type'] == 'minion' \
         and not 'exhausted' in entity \
