@@ -48,6 +48,11 @@ def mk_draw_card(cost):
             'fx': lambda self, game: [draw(game, active(game)) for x in range(self['drawing'])],
             'txt': "draw %d cards" % (cost)}
 
+def mk_discard_card(cost):
+    return {'type': 'spell', 'cost': cost, 'discards': cost,
+            'fx': lambda self, game: [discard(game, inactive(game), random_hand_card(game, inactive(game))) for x in range(self['discards'])],
+            'txt': "opponent discards %d cards" % (cost)}
+
 def mkgame():
     return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]),
             'msg': [], 'max_hand_size': 5, 'max_field_size': 3}
