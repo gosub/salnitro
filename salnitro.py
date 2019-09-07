@@ -1,6 +1,7 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: add card deviations to card_collection
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
 # TODO: implement first real card
