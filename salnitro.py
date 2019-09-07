@@ -13,6 +13,15 @@ def mkplayer(name):
             'field': [], 'deck': deck, 'hand':[], 'discard':[],
             'damage': 0, 'burnout': 1, 'type': 'player'}
 
+def card_collection():
+    all_cards = []
+    all_cards += [mk_damage_card(x) for x in range(1,11)]
+    all_cards += [mk_heal_card(x) for x in range(1,11)]
+    all_cards += [mk_minion_card(x) for x in range(0,11)]
+    all_cards += [mk_draw_card(x) for x in range(1,4)]
+    all_cards += [mk_discard_card(x) for x in range(1,4)]
+    return all_cards
+
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     cards = [mk_damage_card, mk_heal_card, mk_minion_card, mk_draw_card, mk_discard_card]
