@@ -22,6 +22,9 @@ def card_collection():
     all_cards += [mk_discard_card(x) for x in range(1,4)]
     return all_cards
 
+def cards_by_cost(cost):
+    return list(filter(lambda c: c['cost'] == cost, card_collection()))
+
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     cards = [mk_damage_card, mk_heal_card, mk_minion_card, mk_draw_card, mk_discard_card]
