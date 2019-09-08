@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: add card deviations to card_collection
 # TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
 # TODO: implement first real card
@@ -17,7 +16,9 @@ def card_collection():
     all_cards = []
     all_cards += [mk_damage_card(x) for x in range(1,11)]
     all_cards += [mk_heal_card(x) for x in range(1,11)]
-    all_cards += [mk_minion_card(x) for x in range(0,11)]
+    all_cards += [mk_minion_card(0)]
+    all_cards += [mk_minion_card(1,dev) for dev in range(-1,1)]
+    all_cards += [mk_minion_card(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
     return all_cards
