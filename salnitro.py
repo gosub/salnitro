@@ -30,14 +30,16 @@ def mkdeck():
     deck = [random.choice(cards_by_cost(cost)) for cost in values]
     return deck
 
-def mk_minion_card(cost):
+def mk_minion_card(cost, deviation=None):
     if cost == 0:
         attack, health = 0, 1
     elif cost == 1:
-        deviation = random.choice(range(-1,1))
+        if deviation is None:
+            deviation = random.choice(range(-1,1))
         attack, health = cost+deviation, cost-deviation
     else:
-        deviation = random.choice(range(-1,2))
+        if deviation is None:
+            deviation = random.choice(range(-1,2))
         attack, health = cost+deviation, cost-deviation
     return {'type': 'minion', 'name': 'minion',
             'cost': cost, 'attack': attack, 'health': health,
