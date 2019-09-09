@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: add find_card function (returns field and position)
 # TODO: manage no target/abort action during card play (not attack)
 # TODO: implement first real card
 
@@ -25,6 +24,16 @@ def card_collection():
 
 def cards_by_cost(cost):
     return list(filter(lambda c: c['cost'] == cost, card_collection()))
+
+def find_card(game, card):
+    p1, p2 = game['players']
+    try:
+        return p1['field'], find_card_in_field(p1, card)
+    except ValueError:
+        return p2['field'], find_card_in_field(p2, card)
+
+def find_card_in_field(player, card):
+    return [id(x) for x in player['field']].find(id(card))
 
 def mkdeck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
