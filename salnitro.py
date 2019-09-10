@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: manage no target/abort action during card play (not attack)
 # TODO: implement first real card
 
 def mkplayer(name):
@@ -94,9 +93,19 @@ def inc_mana_slot(player):
 def refill_mana(player):
     player['mana'] = player['mana_slots']
 
+def pass_on_none(func):
+    def inner(*args):
+        if None in args:
+            pass
+        else:
+            func(*args)
+    return inner
+
+@pass_on_none
 def heal(target, amount):
     target['damage'] = max(0, target['damage'] - amount)
 
+@pass_on_none
 def deal_damage(game, target, amount):
     target['damage'] += amount
     if target['health'] - target['damage'] <= 0:
@@ -166,6 +175,7 @@ def can_attack(entity):
 def can_defend(entity):
     return entity['type'] == 'minion'
 
+@pass_on_none
 def attack(game, attacker, defender):
     dmg1 = attacker['attack']
     if defender['type'] == 'minion':
@@ -333,8 +343,7 @@ def interactive():
                 elif cmd == 'a' or cmd == 'attack':
                     att = ask_target(g, 'attacker')
                     defe = ask_target(g, 'defender')
-                    if not att is None and not defe is None:
-                        attack(g, att, defe)
+                    attack(g, att, defe)
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif cmd == 'h' or cmd == 'help':
