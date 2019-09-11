@@ -1,6 +1,16 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: implement taunt
+# TODO: implement charge
+# TODO: implement divine shield
+# TODO: implement windfury
+# TODO: implement armor
+# TODO: implement battlecry
+# TODO: implement deathrattle
+# TODO: implement effects while card is in play
+# TODO: implement weapon/equip
+# TODO: implement hero power
 # TODO: implement first real card
 
 def mkplayer(name):
