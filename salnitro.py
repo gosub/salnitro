@@ -141,6 +141,17 @@ def deal_damage(game, target, amount):
         elif target['type'] == 'minion':
             kill_minion(game, target)
 
+def use_hero_power(game):
+    player = active(game)
+    if player['mana'] < player['power_cost']:
+        game['msg'].append("not enough mana")
+    elif player['power_per_turn'] <= player['power_used']:
+        game['msg'].append("hero powered already used this turn")
+    else:
+        player['mana'] -= player['power_cost']
+        player['hero_power'](game)
+        player['power_used'] += 1
+
 def kill_minion(game, minion):
     for player in game['players']:
         try:
