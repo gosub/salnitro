@@ -10,7 +10,6 @@ from os import system, get_terminal_size
 # TODO: implement deathrattle
 # TODO: implement effects while card is in play
 # TODO: implement weapon/equip
-# TODO: implement hero power
 # TODO: implement first real card
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
@@ -387,11 +386,13 @@ def interactive():
                     att = ask_target(g, 'attacker')
                     defe = ask_target(g, 'defender')
                     attack(g, att, defe)
+                elif cmd == 'p' or cmd == 'power':
+                    use_hero_power(g)
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif cmd == 'h' or cmd == 'help':
                     g['msg'] += ["", "1-%d - play card N from hand" % (g['max_hand_size']),
-                                 "a - attack", "h - help", "q - quit", "RET - pass turn"]
+                                 "a - attack", "p - hero power", "h - help", "q - quit", "RET - pass turn"]
                 elif all(x.isdigit() for x in cmd):
                     try:
                         play(g, int(cmd)-1)
