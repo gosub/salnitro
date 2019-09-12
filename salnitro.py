@@ -11,6 +11,7 @@ from os import system, get_terminal_size
 # TODO: implement effects while card is in play
 # TODO: implement weapon/equip
 # TODO: implement first real card
+# TODO: implement missing classes/hero powers
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
 
