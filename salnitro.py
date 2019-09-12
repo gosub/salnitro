@@ -1,6 +1,8 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: show hero power usage and cost on status bar
+# TODO: describe hero power in help msg
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
