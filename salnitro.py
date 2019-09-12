@@ -13,6 +13,20 @@ from os import system, get_terminal_size
 # TODO: implement hero power
 # TODO: implement first real card
 
+classes = ['hunter', 'mage', 'priest', 'warlock']
+
+hero_powers = {
+    #'druid': "+1 Attack this turn. +1 Armor.",
+    'hunter': lambda game: deal_damage(game, inactive(game), 2),
+    'mage': lambda game: deal_damage(game, ask_target(game), 1),
+    #'paladin': "Summon a 1/1 Silver Hand Recruit",
+    'priest': lambda game: heal(active(game), 2),
+    #'rogue': "Equip a 1/2 Dagger",
+    #'shaman': "Summon a random totem",
+    'warlock': lambda game: draw(game, active(game)) or deal_damage(game, active(game),2),
+    #'warrior': "Gain 2 Armor"
+}
+
 def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
