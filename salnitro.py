@@ -30,9 +30,12 @@ hero_powers = {
 def mkplayer(name):
     deck = mkdeck()
     random.shuffle(deck)
+    hero_class = random.choice(classes)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'field': [], 'deck': deck, 'hand':[], 'discard':[],
-            'damage': 0, 'burnout': 1, 'type': 'player'}
+            'damage': 0, 'burnout': 1, 'type': 'player', 'class': hero_class,
+            'hero_power': hero_powers[hero_class],
+            'power_used': 0, 'power_per_turn': 1, 'power_cost': 2}
 
 def card_collection():
     all_cards = []
