@@ -309,10 +309,11 @@ def repr_hand(p, antagonist=False):
 def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
+    hero_class = p['class']
     mana = repr_mana(p)
     deck_size = "≣" + str(len(p['deck']))
     discard_size = "♲" + str(len(p['discard']))
-    return (" "*4).join([name, health, mana, deck_size, discard_size]).center(width())
+    return (" "*4).join([name, health, hero_class, mana, deck_size, discard_size]).center(width())
 
 def repr_player(p, antagonist=False):
     field = repr_field(p, False)
