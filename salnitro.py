@@ -264,6 +264,7 @@ def end_turn(game):
     player = active(game)
     remove_exhaustion(player)
     reset_attack_count(player)
+    reset_power_count(player)
 
 def remove_exhaustion(player):
     for card in player['field']:
@@ -273,6 +274,9 @@ def remove_exhaustion(player):
 def reset_attack_count(player):
     for e in player['field']:
         e['attacks_this_turn'] = 0
+
+def reset_power_count(player):
+    player['power_used'] = 0
 
 def repr_mana(p):
     txt = "%d/%d " % (p['mana'], p['mana_slots'])
