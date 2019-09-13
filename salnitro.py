@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: show hero power usage and cost on status bar
 # TODO: describe hero power in help msg
 # TODO: implement taunt
 # TODO: implement charge
@@ -312,10 +311,11 @@ def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
     hero_class = p['class']
+    hero_power = '(' + ("*" if p['power_per_turn'] > p['power_used'] else " ") + ")²"
     mana = repr_mana(p)
     deck_size = "≣" + str(len(p['deck']))
     discard_size = "♲" + str(len(p['discard']))
-    return (" "*4).join([name, health, hero_class, mana, deck_size, discard_size]).center(width())
+    return (" "*4).join([name, health, hero_class, hero_power, mana, deck_size, discard_size]).center(width())
 
 def repr_player(p, antagonist=False):
     field = repr_field(p, False)
