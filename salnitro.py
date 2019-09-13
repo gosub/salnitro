@@ -13,6 +13,7 @@ from os import system, get_terminal_size
 # TODO: implement weapon/equip
 # TODO: implement first real card
 # TODO: implement missing classes/hero powers
+# TODO: automate superscript showing of heropower cost
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
 
