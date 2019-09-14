@@ -17,16 +17,25 @@ from os import system, get_terminal_size
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
 
-hero_powers = {
-    #'druid': "+1 Attack this turn. +1 Armor.",
-    'hunter': lambda game: deal_damage(game, inactive(game), 2),
-    'mage': lambda game: deal_damage(game, ask_target(game), 1),
-    #'paladin': "Summon a 1/1 Silver Hand Recruit",
-    'priest': lambda game: heal(active(game), 2),
-    #'rogue': "Equip a 1/2 Dagger",
-    #'shaman': "Summon a random totem",
-    'warlock': lambda game: draw(game, active(game)) or deal_damage(game, active(game),2),
-    #'warrior': "Gain 2 Armor"
+heroes = {
+    'druid': {'power': None,
+              'desc': "+1 Attack this turn. +1 Armor."},
+    'hunter': {'power': lambda game: deal_damage(game, inactive(game), 2),
+               'desc': "Deal 2 damage to the enemy hero."},
+    'mage': {'power': lambda game: deal_damage(game, ask_target(game), 1),
+             'desc': "Deal 1 damage."},
+    'paladin': {'power': None,
+                'desc': "Summon a 1/1 Silver Hand Recruit"},
+    'priest': {'power': lambda game: heal(active(game), 2),
+               'desc': "Restore two Health."},
+    'rogue': {'power': None,
+              'desc': "Equip a 1/2 Dagger"},
+    'shaman': {'power': None,
+               'desc': "Summon a random totem"},
+    'warlock': {'power': lambda game: draw(game, active(game)) or deal_damage(game, active(game),2),
+                'desc': "Draw a card and take 2 damage."},
+    'warrior': {'power': None,
+                'desc': "Gain 2 Armor"}
 }
 
 def mkplayer(name):
@@ -36,7 +45,6 @@ def mkplayer(name):
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'field': [], 'deck': deck, 'hand':[], 'discard':[],
             'damage': 0, 'burnout': 1, 'type': 'player', 'class': hero_class,
-            'hero_power': hero_powers[hero_class],
             'power_used': 0, 'power_per_turn': 1, 'power_cost': 2}
 
 def card_collection():
@@ -143,6 +151,9 @@ def deal_damage(game, target, amount):
         elif target['type'] == 'minion':
             kill_minion(game, target)
 
+def hero_power(player):
+    return heroes[player['class']]['power']
+
 def use_hero_power(game):
     player = active(game)
     if player['mana'] < player['power_cost']:
@@ -151,7 +162,7 @@ def use_hero_power(game):
         game['msg'].append("hero powered already used this turn")
     else:
         player['mana'] -= player['power_cost']
-        player['hero_power'](game)
+        hero_power(player)(game)
         player['power_used'] += 1
 
 def kill_minion(game, minion):
