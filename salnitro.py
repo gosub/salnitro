@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: describe hero power in help msg
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
@@ -153,6 +152,9 @@ def deal_damage(game, target, amount):
 
 def hero_power(player):
     return heroes[player['class']]['power']
+
+def hero_power_desc(player):
+    return heroes[player['class']]['desc']
 
 def use_hero_power(game):
     player = active(game)
@@ -406,8 +408,12 @@ def interactive():
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
                 elif cmd == 'h' or cmd == 'help':
-                    g['msg'] += ["", "1-%d - play card N from hand" % (g['max_hand_size']),
-                                 "a - attack", "p - hero power", "h - help", "q - quit", "RET - pass turn"]
+                    g['msg'] = [""]
+                    g['msg'].append("hero power: %s" %(hero_power_desc(active(g))))
+                    g['msg'].append("")
+                    g['msg'].append("1-%d - play card N from hand" % (g['max_hand_size']))
+                    g['msg'] += ["a - attack", "p - hero power", "h - help"]
+                    g['msg'] += ["q - quit", "RET - pass turn"]
                 elif all(x.isdigit() for x in cmd):
                     try:
                         play(g, int(cmd)-1)
