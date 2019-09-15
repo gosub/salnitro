@@ -12,7 +12,6 @@ from os import system, get_terminal_size
 # TODO: implement weapon/equip
 # TODO: implement first real card
 # TODO: implement missing classes/hero powers
-# TODO: automate superscript showing of heropower cost
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
 
@@ -321,11 +320,15 @@ def repr_hand(p, antagonist=False):
     left_align = (width()-10)//2
     return "\n".join(" "*left_align + c for c in indented)
 
+def sup(i):
+    return "⁰¹²³⁴⁵⁶⁷⁸⁹"[i]
+
 def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
     hero_class = p['class']
-    hero_power = '(' + ("*" if p['power_per_turn'] > p['power_used'] else " ") + ")²"
+    hero_power = '(' + ("*" if p['power_per_turn'] > p['power_used'] else " ") + ")"
+    hero_power += sup(p['power_cost'])
     mana = repr_mana(p)
     deck_size = "≣" + str(len(p['deck']))
     discard_size = "♲" + str(len(p['discard']))
