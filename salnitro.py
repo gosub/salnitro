@@ -49,9 +49,9 @@ def card_collection():
     all_cards = []
     all_cards += [mk_damage_card(x) for x in range(1,11)]
     all_cards += [mk_heal_card(x) for x in range(1,11)]
-    all_cards += [mk_minion_card(0)]
-    all_cards += [mk_minion_card(1,dev) for dev in range(-1,1)]
-    all_cards += [mk_minion_card(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
+    all_cards += [mk_generic_minion(0)]
+    all_cards += [mk_generic_minion(1,dev) for dev in range(-1,1)]
+    all_cards += [mk_generic_minion(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
     return all_cards
@@ -74,7 +74,12 @@ def mkdeck():
     deck = [random.choice(cards_by_cost(cost)) for cost in values]
     return deck
 
-def mk_minion_card(cost, deviation=None):
+def mk_minion_card(cost, name, attack, health, other_props={}):
+    return {'type': 'minion', 'name': name,
+            'cost': cost, 'attack': attack, 'health': health,
+            'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
+
+def mk_generic_minion(cost, deviation=None):
     if cost == 0:
         attack, health = 0, 1
     elif cost == 1:
@@ -85,9 +90,8 @@ def mk_minion_card(cost, deviation=None):
         if deviation is None:
             deviation = random.choice(range(-1,2))
         attack, health = cost+deviation, cost-deviation
-    return {'type': 'minion', 'name': 'minion',
-            'cost': cost, 'attack': attack, 'health': health,
-            'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0}
+    return mk_minion_card(cost, "minion", attack, health)
+
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
