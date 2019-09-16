@@ -1,16 +1,16 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: implement battlecry
+# TODO: implement first real card
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement armor
-# TODO: implement battlecry
 # TODO: implement deathrattle
 # TODO: implement effects while card is in play
 # TODO: implement weapon/equip
-# TODO: implement first real card
 # TODO: implement missing classes/hero powers
 
 classes = ['hunter', 'mage', 'priest', 'warlock']
