@@ -24,7 +24,7 @@ heroes = {
              'desc': "Deal 1 damage."},
     'paladin': {'power': None,
                 'desc': "Summon a 1/1 Silver Hand Recruit"},
-    'priest': {'power': lambda game: heal(active(game), 2),
+    'priest': {'power': lambda game: heal(ask_target(game, friends_first=True), 2),
                'desc': "Restore two Health."},
     'rogue': {'power': None,
               'desc': "Equip a 1/2 Dagger"},
