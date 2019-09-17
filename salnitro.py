@@ -405,8 +405,8 @@ def interactive():
                     end_turn(g)
                     break
                 elif cmd == 'a' or cmd == 'attack':
-                    att = ask_target(g, 'attacker')
-                    defe = ask_target(g, 'defender')
+                    att = ask_target(g, subset='attacker')
+                    defe = ask_target(g, subset='defender')
                     attack(g, att, defe)
                 elif cmd == 'p' or cmd == 'power':
                     use_hero_power(g)
