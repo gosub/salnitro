@@ -262,12 +262,14 @@ def play(g, player, card, from_hand=False):
     else:
         raise Exception('unknow card type %s' % (card['type']))
 
-def play_spell(g, player, card, from_hand=False):
-    card['fx'](card, g)
+def play_spell(game, player, card, from_hand=False):
+    card['fx'](card, game)
     player['discard'].append(card)
 
-def play_minion(g, player, card, from_hand=False):
+def play_minion(game, player, card, from_hand=False):
     card['exhausted'] = True
+    if from_hand and 'battlecry' in card:
+        card['battlecry'](card, game)
     player['field'].append(card)
 
 def new_turn(game):
