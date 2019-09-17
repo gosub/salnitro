@@ -94,7 +94,7 @@ def mk_generic_minion(cost, deviation=None):
     return mk_minion_card(cost, "minion", attack, health)
 
 voodoo_doctor = mk_minion_card(1, "Voodoo Doctor", 2, 1, 
-                              {'battlecry': lambda self, game: heal(ask_target(game), 2)})
+                              {'battlecry': lambda self, game: heal(ask_target(game, friends_first=True), 2)})
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
@@ -103,7 +103,7 @@ def mk_damage_card(cost):
 
 def mk_heal_card(cost):
     return {'type': 'spell', 'cost': cost, 'healing': cost,
-            'fx': lambda self, game: heal(ask_target(game), self['healing']),
+            'fx': lambda self, game: heal(ask_target(game,friends_first=True), self['healing']),
             'txt': "heal %d life" % (cost)}
 
 def mk_draw_card(cost):
