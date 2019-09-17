@@ -186,33 +186,24 @@ def kill_minion(game, minion):
 class Dead(Exception):
     pass
 
-class NotEnoughMana(Exception):
-    pass
-
-class HandMaxxed(Exception):
-    pass
-
-class FieldMaxxed(Exception):
-    pass
-
-class EmptyDeck(Exception):
-    pass
-
 def draw(game, player):
-    try:
-        if len(player['deck']) <= 0:
-            raise EmptyDeck
-        card = player['deck'].pop()
-        if len(player['hand']) >= game['max_hand_size']:
-            raise HandMaxxed
-        player['hand'].append(card)
-    except HandMaxxed:
-            game['msg'].append("hand full - card discarded")
-            player['discard'].append(card)
-    except EmptyDeck:
-        game['msg'].append("no more cards - burnout -%d" % player['burnout'])
-        deal_damage(game, player, player['burnout'])
-        player['burnout'] += 1
+    if len(player['deck']) <= 0:
+        draw_from_empty_deck(game, player)
+        return
+    card = player['deck'].pop()
+    if len(player['hand']) >= game['max_hand_size']:
+        draw_with_full_hand(game, player)
+        return
+    player['hand'].append(card)
+
+def draw_with_full_hand(game, player):
+    game['msg'].append("hand full - card discarded")
+    player['discard'].append(card)
+
+def draw_from_empty_deck(game, player):
+    game['msg'].append("no more cards - burnout -%d" % player['burnout'])
+    deal_damage(game, player, player['burnout'])
+    player['burnout'] += 1
 
 def random_hand_card(game, player):
     if len(player['hand']) <= 0:
