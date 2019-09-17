@@ -37,7 +37,7 @@ heroes = {
 }
 
 def mkplayer(name):
-    deck = mkdeck()
+    deck = mk_test_deck()
     random.shuffle(deck)
     hero_class = random.choice(classes)
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
@@ -70,9 +70,13 @@ def find_card(game, card):
 def find_card_in_field(player, card):
     return [id(x) for x in player['field']].find(id(card))
 
-def mkdeck():
+def mk_random_deck():
     values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     deck = [random.choice(cards_by_cost(cost)) for cost in values]
+    return deck
+
+def mk_test_deck():
+    deck = mk_random_deck()[:10] + [voodoo_doctor() for _ in range(10)]
     return deck
 
 def mk_minion_card(cost, name, attack, health, other_props={}):
