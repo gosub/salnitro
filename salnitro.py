@@ -1,8 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: implement battlecry
-# TODO: implement first real card
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
