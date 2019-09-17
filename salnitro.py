@@ -197,11 +197,11 @@ def draw(game, player):
         return
     card = player['deck'].pop()
     if len(player['hand']) >= game['max_hand_size']:
-        draw_with_full_hand(game, player)
+        draw_with_full_hand(game, player, card)
         return
     player['hand'].append(card)
 
-def draw_with_full_hand(game, player):
+def draw_with_full_hand(game, player, card):
     game['msg'].append("hand full - card discarded")
     player['discard'].append(card)
 
