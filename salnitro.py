@@ -249,29 +249,28 @@ def play_from_hand(g, hand_pos):
     player = active(g)
     card = player['hand'][hand_pos]
     typ = card['type']
-    try:
-        if card['cost'] > player['mana']:
-            raise NotEnoughMana
-        if typ == 'minion' and len(player['field']) >= g['max_field_size']:
-            raise FieldMaxxed
-        player['mana'] -= card['cost']
-        del player['hand'][hand_pos]
-        if typ == 'spell':
-            play_spell(g, player, card)
-        elif typ == 'minion':
-            play_minion(g, player, card)
-        else:
-            raise Exception('unknow card type %s' % (card['type']))
-    except NotEnoughMana:
+    if card['cost'] > player['mana']:
         g['msg'].append("insufficient mana")
-    except FieldMaxxed:
+    elif typ == 'minion' and len(player['field']) >= g['max_field_size']:
         g['msg'].append("field is full")
+    else:
+        del player['hand'][hand_pos]
+        play(g, player, card, from_hand=True)
 
-def play_spell(g, player, card):
+def play(g, player, card, from_hand=False):
+    player['mana'] -= card['cost']
+    if card['type'] == 'spell':
+        play_spell(g, player, card, from_hand)
+    elif card['type'] == 'minion':
+        play_minion(g, player, card, from_hand)
+    else:
+        raise Exception('unknow card type %s' % (card['type']))
+
+def play_spell(g, player, card, from_hand=False):
     card['fx'](card, g)
     player['discard'].append(card)
 
-def play_minion(g, player, card):
+def play_minion(g, player, card, from_hand=False):
     card['exhausted'] = True
     player['field'].append(card)
 
