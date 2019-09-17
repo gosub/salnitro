@@ -54,7 +54,7 @@ def card_collection():
     all_cards += [mk_generic_minion(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
-    all_cards += [voodoo_doctor]
+    all_cards += [voodoo_doctor()]
     return all_cards
 
 def cards_by_cost(cost):
@@ -93,8 +93,9 @@ def mk_generic_minion(cost, deviation=None):
         attack, health = cost+deviation, cost-deviation
     return mk_minion_card(cost, "minion", attack, health)
 
-voodoo_doctor = mk_minion_card(1, "Voodoo Doctor", 2, 1, 
-                              {'battlecry': lambda self, game: heal(ask_target(game, friends_first=True), 2)})
+def voodoo_doctor():
+    return mk_minion_card(1, "Voodoo Doctor", 2, 1,
+        {'battlecry': lambda self, game: heal(ask_target(game, friends_first=True), 2)})
 
 def mk_damage_card(cost):
     return {'type': 'spell', 'cost': cost, 'damage': cost,
