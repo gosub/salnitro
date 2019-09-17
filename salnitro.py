@@ -245,7 +245,7 @@ def attack(game, attacker, defender):
         deal_damage(game, defender, dmg1)
     attacker['attacks_this_turn'] += 1
 
-def play(g, hand_pos):
+def play_from_hand(g, hand_pos):
     player = active(g)
     card = player['hand'][hand_pos]
     typ = card['type']
@@ -426,7 +426,7 @@ def interactive():
                     g['msg'] += ["q - quit", "RET - pass turn"]
                 elif all(x.isdigit() for x in cmd):
                     try:
-                        play(g, int(cmd)-1)
+                        play_from_hand(g, int(cmd)-1)
                     except IndexError:
                         pass
                 else:
