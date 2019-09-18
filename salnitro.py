@@ -1,6 +1,8 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: show card text
+# TODO: show when minion can still attack
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
