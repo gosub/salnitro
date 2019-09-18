@@ -74,7 +74,11 @@ def mk_random_deck():
     return deck
 
 def mk_test_deck():
-    deck = mk_random_deck()[:10] + [voodoo_doctor() for _ in range(10)]
+    deck = mk_random_deck()
+    random.shuffle(deck)
+    deck = deck[:10]
+    deck += [voodoo_doctor() for _ in range(5)]
+    deck += [elven_archer() for _ in range(5)]
     return deck
 
 def mk_minion_card(cost, name, attack, health, other_props={}):
