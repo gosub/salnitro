@@ -83,7 +83,7 @@ def mk_test_deck():
     deck += [elven_archer() for _ in range(5)]
     return deck
 
-def mk_minion_card(cost, name, attack, health, other_props={}):
+def mk_minion_card(cost, name, attack, health, **other_props):
     return {'type': 'minion', 'name': name,
             'cost': cost, 'attack': attack, 'health': health,
             'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
@@ -105,11 +105,15 @@ def mk_generic_minion(cost, deviation=None):
 
 def voodoo_doctor():
     return mk_minion_card(1, "Voodoo Doctor", 2, 1,
-        {'battlecry': lambda self, game: heal(ask_target(game, friends_first=True), 2)})
+            text = "Battlecry: Restore 2 Health.",
+            battlecry = lambda self, game:
+                          heal(ask_target(game, friends_first=True), 2))
 
 def elven_archer():
     return mk_minion_card(1, "Elven Archer", 1, 1,
-        {'battlecry': lambda self, game: deal_damage(game, ask_target(game), 1)})
+            text = "Battlecry: Deal 1 damage.",
+            battlecry = lambda self, game:
+                          deal_damage(game, ask_target(game), 1))
 
 # --- --- ---
 
