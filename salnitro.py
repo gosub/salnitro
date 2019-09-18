@@ -1,6 +1,7 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: implement second card
 # TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
