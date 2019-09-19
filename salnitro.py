@@ -2,7 +2,6 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
-# TODO: show when minion can still attack
 # TODO: implement charge
 # TODO: implement divine shield
 # TODO: implement windfury
@@ -244,6 +243,7 @@ def discard(game, player, hand_pos):
 
 def can_attack(entity):
     return entity['type'] == 'minion' \
+        and 'summoned' in entity \
         and not 'exhausted' in entity \
         and entity['attacks_this_turn'] < entity['max_attacks']
 
@@ -287,6 +287,7 @@ def play_spell(game, player, card, from_hand=False):
     player['discard'].append(card)
 
 def play_minion(game, player, card, from_hand=False):
+    card['summoned'] = True
     card['exhausted'] = True
     if from_hand and 'battlecry' in card:
         card['battlecry'](card, game)
@@ -329,9 +330,13 @@ def repr_card(c, antagonist=False):
     elif c['type'] == 'spell':
         return "[[%d] %s]" % (c['cost'], c['txt'])
     elif c['type'] == 'minion':
-        return "[[%d] %s %s[%d/%d]]" % (c['cost'], c['name'],
-                    'zZzZ' if 'exhausted' in c and c['exhausted'] else '',
-                    c['attack'], c['health']-c['damage'])
+        atck = '^' if can_attack(c) else ''
+        exh = 'zZzZ' if 'exhausted' in c  else ''
+        tau = '☒' if 'taunt' in c else ''
+        fmt = "%s[%s[%d] %s %s[%d/%d]%s]%s"
+        fill = (atck, tau, c['cost'], c['name'], exh,
+                c['attack'], c['health'], tau, atck)
+        return  fmt % fill
     else:
         raise Exception('unknow card type %s' % (c['type']))
 
