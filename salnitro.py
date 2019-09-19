@@ -54,7 +54,7 @@ def card_collection():
     all_cards += [mk_generic_minion(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
-    all_cards += [voodoo_doctor(), elven_archer()]
+    all_cards += [voodoo_doctor(), elven_archer(), goldshire_footman()]
     return all_cards
 
 def cards_by_cost(cost):
@@ -78,9 +78,10 @@ def mk_random_deck():
 def mk_test_deck():
     deck = mk_random_deck()
     random.shuffle(deck)
-    deck = deck[:10]
-    deck += [voodoo_doctor() for _ in range(5)]
-    deck += [elven_archer() for _ in range(5)]
+    deck = deck[:11]
+    deck += [voodoo_doctor() for _ in range(3)]
+    deck += [elven_archer() for _ in range(3)]
+    deck += [goldshire_footman() for _ in range(3)]
     return deck
 
 def mk_minion_card(cost, name, attack, health, **other_props):
@@ -114,6 +115,10 @@ def elven_archer():
             text = "Battlecry: Deal 1 damage.",
             battlecry = lambda self, game:
                           deal_damage(game, ask_target(game), 1))
+
+def goldshire_footman():
+    return mk_minion_card(1, "Goldshire Footman", 1, 2,
+            text = "Taunt", taunt=True)
 
 # --- --- ---
 
