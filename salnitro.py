@@ -3,7 +3,6 @@ from os import system, get_terminal_size
 
 # TODO: show card text
 # TODO: show when minion can still attack
-# TODO: implement taunt
 # TODO: implement charge
 # TODO: implement divine shield
 # TODO: implement windfury
@@ -394,6 +393,8 @@ def ask_target(game, subset=None, friends_first=False):
     tgts = []
     if subset == 'attacker':
         tgts += bbb
+    elif subset == 'defender' and any('taunt' in m for m in aaa):
+        tgts += [m for m in aaa if 'taunt' in m]
     elif subset == 'defender':
         tgts.append(a)
         tgts += aaa
