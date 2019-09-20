@@ -43,7 +43,7 @@ def mkplayer(name):
             'damage': 0, 'burnout': 1, 'type': 'player', 'class': hero_class,
             'power_used': 0, 'power_per_turn': 1, 'power_cost': 2}
 
-def card_collection():
+def generic_card_collection():
     all_cards = []
     all_cards += [mk_damage_card(x) for x in range(1,11)]
     all_cards += [mk_heal_card(x) for x in range(1,11)]
@@ -52,11 +52,10 @@ def card_collection():
     all_cards += [mk_generic_minion(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
-    all_cards += [voodoo_doctor(), elven_archer(), goldshire_footman()]
     return all_cards
 
 def cards_by_cost(cost):
-    return list(filter(lambda c: c['cost'] == cost, card_collection()))
+    return list(filter(lambda c: c['cost'] == cost, generic_card_collection()))
 
 def find_card(game, card):
     p1, p2 = game['players']
