@@ -75,10 +75,11 @@ def mk_random_deck():
 def mk_test_deck():
     deck = mk_random_deck()
     random.shuffle(deck)
-    deck = deck[:11]
+    deck = deck[:8]
     deck += [voodoo_doctor() for _ in range(3)]
     deck += [elven_archer() for _ in range(3)]
     deck += [goldshire_footman() for _ in range(3)]
+    deck += [murloc_raider() for _ in range(3)]
     return deck
 
 def mk_minion_card(cost, name, attack, health, **other_props):
@@ -116,6 +117,9 @@ def elven_archer():
 def goldshire_footman():
     return mk_minion_card(1, "Goldshire Footman", 1, 2,
             text = "Taunt", taunt=True)
+
+def murloc_raider():
+    return mk_minion_card(1, "Murloc Raider", 2, 1)
 
 # --- --- ---
 
