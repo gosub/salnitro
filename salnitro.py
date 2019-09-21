@@ -2,7 +2,6 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
-# TODO: implement charge
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement armor
@@ -296,7 +295,8 @@ def play_spell(game, player, card, from_hand=False):
 
 def play_minion(game, player, card, from_hand=False):
     card['summoned'] = True
-    card['exhausted'] = True
+    if not 'charge' in card:
+        card['exhausted'] = True
     if from_hand and 'battlecry' in card:
         card['battlecry'](card, game)
     player['field'].append(card)
