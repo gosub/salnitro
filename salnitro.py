@@ -438,6 +438,8 @@ def interactive():
                     use_hero_power(g)
                 elif cmd == 'q' or cmd == 'quit':
                     exit()
+                elif cmd == 'd' or cmd == 'debug':
+                    import pdb; pdb.set_trace()
                 elif cmd == 'h' or cmd == 'help':
                     g['msg'] = [""]
                     g['msg'].append("hero power: %s" %(hero_power_desc(active(g))))
