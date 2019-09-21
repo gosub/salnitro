@@ -46,9 +46,6 @@ def generic_card_collection():
     all_cards = []
     all_cards += [mk_damage_card(x) for x in range(1,11)]
     all_cards += [mk_heal_card(x) for x in range(1,11)]
-    all_cards += [mk_generic_minion(0)]
-    all_cards += [mk_generic_minion(1,dev) for dev in range(-1,1)]
-    all_cards += [mk_generic_minion(cost,dev) for cost in range(2,11) for dev in range(-1,2)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
     return all_cards
@@ -67,7 +64,7 @@ def find_card_in_field(player, card):
     return [id(x) for x in player['field']].find(id(card))
 
 def mk_random_deck():
-    values = [0,0,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
+    values = [1,1,1,2,2,2,2,3,3,3,3,4,4,4,5,5,6,6,7,8]
     deck = [random.choice(cards_by_cost(cost)) for cost in values]
     return deck
 
@@ -86,19 +83,6 @@ def mk_minion_card(cost, name, attack, health, **other_props):
     return {'type': 'minion', 'name': name,
             'cost': cost, 'attack': attack, 'health': health,
             'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
-
-def mk_generic_minion(cost, deviation=None):
-    if cost == 0:
-        attack, health = 0, 1
-    elif cost == 1:
-        if deviation is None:
-            deviation = random.choice(range(-1,1))
-        attack, health = cost+deviation, cost-deviation
-    else:
-        if deviation is None:
-            deviation = random.choice(range(-1,2))
-        attack, health = cost+deviation, cost-deviation
-    return mk_minion_card(cost, "minion", attack, health)
 
 # BASIC set / Neutral
 
