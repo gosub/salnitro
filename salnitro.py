@@ -316,13 +316,13 @@ def repr_mana(p):
     mana += "." * (10-p['mana_slots'])
     return txt + mana
 
-def repr_card(c, antagonist=False):
-    if antagonist:
+def repr_card(c, hidden=False, antagonist=False):
+    if hidden:
         return "[------]"
     elif c['type'] == 'spell':
         return "[[%d] %s]" % (c['cost'], c['txt'])
     elif c['type'] == 'minion':
-        atck = '^' if can_attack(c) else ''
+        atck = '^' if can_attack(c) and not antagonist else ''
         exh = 'zZzZ' if 'exhausted' in c  else ''
         tau = '☒' if 'taunt' in c else ''
         fmt = "%s[%s[%d] %s %s[%d/%d]%s]%s"
@@ -333,10 +333,10 @@ def repr_card(c, antagonist=False):
         raise Exception('unknow card type %s' % (c['type']))
 
 def repr_field(p, antagonist):
-    return "  ".join(repr_card(c, antagonist) for c in p['field']).center(width())
+    return "  ".join(repr_card(c, antagonist=antagonist) for c in p['field']).center(width())
 
-def repr_hand(p, antagonist=False):
-    cards = [repr_card(c, antagonist) for c in p['hand']]
+def repr_hand(p, hidden=False, antagonist=False):
+    cards = [repr_card(c, hidden, antagonist) for c in p['hand']]
     indented = [" "*n + c for n,c in enumerate(cards)]
     left_align = (width()-10)//2
     return "\n".join(" "*left_align + c for c in indented)
@@ -356,8 +356,8 @@ def repr_status(p, antagonist):
     return (" "*4).join([name, health, hero_class, hero_power, mana, deck_size, discard_size]).center(width())
 
 def repr_player(p, antagonist=False):
-    field = repr_field(p, False)
-    hand = repr_hand(p, antagonist)
+    field = repr_field(p, antagonist)
+    hand = repr_hand(p, hidden=antagonist, antagonist=antagonist)
     bar = repr_status(p, antagonist)
     empty = ""
     lines = [field, empty, empty, hand, empty, bar]
