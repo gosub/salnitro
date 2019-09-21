@@ -426,10 +426,12 @@ def interactive():
             while True:
                 system('clear')
                 show(g)
-                cmd = input('\ncard to play [RET=pass]: ').strip().lower()
+                cmd = input('\naction [h=help, RET=pass]: ').strip().lower()
                 if cmd == '' or cmd == 'pass':
                     end_turn(g)
                     break
+                if cmd == 'n' or cmd == 'null':
+                    pass
                 elif cmd == 'a' or cmd == 'attack':
                     att = ask_target(g, subset='attacker')
                     defe = ask_target(g, subset='defender')
@@ -446,6 +448,7 @@ def interactive():
                     g['msg'].append("")
                     g['msg'].append("1-%d - play card N from hand" % (g['max_hand_size']))
                     g['msg'] += ["a - attack", "p - hero power", "h - help"]
+                    g['msg'] += ["n - null command", "d - debugger"]
                     g['msg'] += ["q - quit", "RET - pass turn"]
                 elif all(x.isdigit() for x in cmd):
                     try:
