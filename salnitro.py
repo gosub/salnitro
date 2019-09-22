@@ -342,9 +342,10 @@ def repr_card(c, hidden=False, antagonist=False):
         atck = '^' if can_attack(c) and not antagonist else ''
         exh = 'zZzZ' if 'exhausted' in c  else ''
         tau = '☒' if 'taunt' in c else ''
+        hea = c['health'] - c['damage'] if 'damage' in c else c['health']
         fmt = "%s[%s[%d] %s %s[%d/%d]%s]%s"
         fill = (atck, tau, c['cost'], c['name'], exh,
-                c['attack'], c['health'], tau, atck)
+                c['attack'], hea, tau, atck)
         return  fmt % fill
     else:
         raise Exception('unknow card type %s' % (c['type']))
