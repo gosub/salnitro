@@ -4,13 +4,12 @@ from os import system, get_terminal_size
 # TODO: show card text
 # TODO: implement divine shield
 # TODO: implement windfury
-# TODO: implement armor
 # TODO: implement deathrattle
 # TODO: implement effects while card is in play
 # TODO: implement weapon/equip
 # TODO: implement missing classes/hero powers
 
-classes = ['hunter', 'mage', 'priest', 'warlock']
+classes = ['hunter', 'mage', 'priest', 'warlock', 'warrior']
 
 heroes = {
     'druid': {'power': None,
@@ -29,7 +28,7 @@ heroes = {
                'desc': "Summon a random totem"},
     'warlock': {'power': lambda game: draw(game, active(game)) or deal_damage(game, active(game),2),
                 'desc': "Draw a card and take 2 damage."},
-    'warrior': {'power': None,
+    'warrior': {'power': lambda game: gain_armor(game, active(game), 2),
                 'desc': "Gain 2 Armor"}
 }
 
