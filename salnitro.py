@@ -164,12 +164,24 @@ def heal(target, amount):
 
 @pass_on_none
 def deal_damage(game, target, amount):
+    if 'armor' in target:
+        armor_dmg = min(target['armor'], amount)
+        target['armor'] -= armor_dmg
+        if target['armor'] == 0:
+            del target['armor']
+        amount -= armor_dmg
     target['damage'] += amount
     if target['health'] - target['damage'] <= 0:
         if target['type'] == 'player':
             raise Dead(target)
         elif target['type'] == 'minion':
             kill_minion(game, target)
+
+def gain_armor(game, player, amount):
+    if 'armor' in player:
+        player['armor'] += amount
+    else:
+        player['armor'] = amount
 
 def hero_power(player):
     return heroes[player['class']]['power']
