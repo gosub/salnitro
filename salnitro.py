@@ -365,7 +365,8 @@ def sup(i):
 def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
-    hero_class = p['class']
+    armor = "  ☒" + str(p['armor']) if 'armor' in p else ""
+    hero_class = p['class'] + armor
     hero_power = '(' + ("*" if p['power_per_turn'] > p['power_used'] else " ") + ")"
     hero_power += sup(p['power_cost'])
     mana = repr_mana(p)
