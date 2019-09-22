@@ -48,6 +48,7 @@ def generic_card_collection():
     all_cards += [mk_heal_card(x) for x in range(1,11)]
     all_cards += [mk_draw_card(x) for x in range(1,4)]
     all_cards += [mk_discard_card(x) for x in range(1,4)]
+    all_cards += [mk_armor_card(x) for x in range(1,11)]
     return all_cards
 
 def cards_by_cost(cost):
@@ -130,6 +131,11 @@ def mk_discard_card(cost):
     return {'type': 'spell', 'cost': cost, 'discards': cost,
             'fx': lambda self, game: [discard(game, inactive(game), random_hand_card(game, inactive(game))) for x in range(self['discards'])],
             'txt': "opponent discards %d cards" % (cost)}
+
+def mk_armor_card(cost):
+    return {'type': 'spell', 'cost': cost, 'armor': cost,
+            'fx': lambda self, game: gain_armor(game, active(game), self['cost']),
+            'txt': "gain %d Armor" % (cost)}
 
 def mkgame():
     return {'players': [mkplayer('P1'), mkplayer('P2')], 'active': random.choice([0,1]),
