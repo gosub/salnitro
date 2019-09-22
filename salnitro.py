@@ -399,7 +399,8 @@ def show(game):
 
 def ask_target(game, subset=None, friends_first=False):
     repr = {'player': lambda p: p['name'], 'minion': repr_card}
-    filt = {'attacker': can_attack, 'defender': can_defend, None: lambda x: True}
+    filt = {'attacker': can_attack, 'defender': can_defend,
+            None: lambda x: True, 'player': lambda x: True}
     prompt = {'attacker': "select attacker:", 'defender': "select defender:",
         None: "select target:"}
     a = inactive(game)
@@ -414,6 +415,8 @@ def ask_target(game, subset=None, friends_first=False):
     elif subset == 'defender':
         tgts.append(a)
         tgts += aaa
+    elif subset == 'players':
+        tgts += [b, a] if friends_first else [a, b]
     elif friends_first:
         tgts.append(b)
         tgts += bbb
