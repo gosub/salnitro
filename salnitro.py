@@ -278,7 +278,7 @@ def play_from_hand(g, hand_pos):
     typ = card['type']
     if card['cost'] > player['mana']:
         g['msg'].append("insufficient mana")
-    elif typ == 'minion' and len(player['field']) >= g['max_field_size']:
+    elif typ == 'minion' and field_is_full(g, player):
         g['msg'].append("field is full")
     else:
         del player['hand'][hand_pos]
