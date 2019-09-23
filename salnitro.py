@@ -9,7 +9,7 @@ from os import system, get_terminal_size
 # TODO: implement weapon/equip
 # TODO: implement missing classes/hero powers
 
-classes = ['hunter', 'mage', 'priest', 'warlock', 'warrior']
+classes = ['hunter', 'mage', 'paladin', 'priest', 'warlock', 'warrior']
 
 heroes = {
     'druid': {'power': None,
@@ -18,7 +18,7 @@ heroes = {
                'desc': "Deal 2 damage to the enemy hero."},
     'mage': {'power': lambda game: deal_damage(game, ask_target(game), 1),
              'desc': "Deal 1 damage."},
-    'paladin': {'power': None,
+    'paladin': {'power': lambda game: summon(game, active(game), silver_hand_recruit()),
                 'desc': "Summon a 1/1 Silver Hand Recruit"},
     'priest': {'power': lambda game: heal(ask_target(game, friends_first=True), 2),
                'desc': "Restore two Health."},
@@ -83,6 +83,11 @@ def mk_minion_card(cost, name, attack, health, **other_props):
     return {'type': 'minion', 'name': name,
             'cost': cost, 'attack': attack, 'health': health,
             'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
+
+# Uncollectibles
+
+def silver_hand_recruit():
+    return mk_minion_card(1, "Silver Hand Recruit", 1, 1)
 
 # BASIC set / Neutral
 
