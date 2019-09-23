@@ -269,6 +269,9 @@ def attack(game, attacker, defender):
         deal_damage(game, defender, dmg1)
     attacker['attacks_this_turn'] += 1
 
+def field_is_full(game, player):
+    return len(player['field']) >= game['max_field_size']
+
 def play_from_hand(g, hand_pos):
     player = active(g)
     card = player['hand'][hand_pos]
@@ -294,13 +297,19 @@ def play_spell(game, player, card, from_hand=False):
     card['fx'](card, game)
     player['discard'].append(card)
 
+def summon(game, player, card):
+    if not field_is_full(game, player):
+        card['summoned'] = True
+        if not 'charge' in card:
+            card['exhausted'] = True
+        player['field'].append(card)
+    else:
+        game['msg'].append("field is full")
+
 def play_minion(game, player, card, from_hand=False):
-    card['summoned'] = True
-    if not 'charge' in card:
-        card['exhausted'] = True
     if from_hand and 'battlecry' in card:
         card['battlecry'](card, game)
-    player['field'].append(card)
+    summon(game, player, card)
 
 def new_turn(game):
     switch_player(game)
