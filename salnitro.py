@@ -84,10 +84,18 @@ def mk_minion_card(cost, name, attack, health, **other_props):
             'cost': cost, 'attack': attack, 'health': health,
             'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
 
+def mk_weapon_card(cost, name, attack, durability, **other_props):
+    return {'type': 'weapon', 'name': name, 'cost': cost,
+            'attack': attack, 'durability': durability,
+            'uses': 0, 'uses_per_turn': 1, 'uses_this_turn': 0, **other_props}
+
 # Uncollectibles
 
 def silver_hand_recruit():
     return mk_minion_card(1, "Silver Hand Recruit", 1, 1)
+
+def  wicked_knife():
+    return mk_weapon_card(1, "Wicked Knife", 1, 2)
 
 # BASIC set / Neutral
 
