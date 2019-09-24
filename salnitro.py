@@ -8,6 +8,7 @@ from os import system, get_terminal_size
 # TODO: implement effects while card is in play / Grimscale Oracle
 # TODO: implement weapon&equip / Acidic Swamp Ooze
 # TODO: implement missing classes/hero powers
+# MAYBE: hero_power as a separate entity from hero_class
 
 classes = ['hunter', 'mage', 'paladin', 'priest', 'warlock', 'warrior']
 
