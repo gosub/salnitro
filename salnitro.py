@@ -5,8 +5,8 @@ from os import system, get_terminal_size
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement deathrattle
-# TODO: implement effects while card is in play
-# TODO: implement weapon/equip
+# TODO: implement effects while card is in play / Grimscale Oracle
+# TODO: implement weapon&equip / Acidic Swamp Ooze
 # TODO: implement missing classes/hero powers
 
 classes = ['hunter', 'mage', 'paladin', 'priest', 'warlock', 'warrior']
