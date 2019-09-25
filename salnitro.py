@@ -1,16 +1,16 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: implement Acidic Swamp Ooze
 # TODO: show card text
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement deathrattle
 # TODO: implement effects while card is in play / Grimscale Oracle
-# TODO: implement weapon&equip / Acidic Swamp Ooze
 # TODO: implement missing classes/hero powers
 # MAYBE: hero_power as a separate entity from hero_class
 
-classes = ['hunter', 'mage', 'paladin', 'priest', 'warlock', 'warrior']
+classes = ['hunter', 'mage', 'paladin', 'priest', 'rogue', 'warlock', 'warrior']
 
 heroes = {
     'druid': {'power': None,
@@ -23,7 +23,7 @@ heroes = {
                 'desc': "Summon a 1/1 Silver Hand Recruit"},
     'priest': {'power': lambda game: heal(ask_target(game, friends_first=True), 2),
                'desc': "Restore two Health."},
-    'rogue': {'power': None,
+    'rogue': {'power': lambda game: equip(game, active(game), wicked_knife()),
               'desc': "Equip a 1/2 Dagger"},
     'shaman': {'power': None,
                'desc': "Summon a random totem"},
