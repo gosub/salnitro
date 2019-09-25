@@ -483,6 +483,8 @@ def ask_target(game, subset=None, friends_first=False):
     tgts = []
     if subset == 'attacker':
         tgts += bbb
+        if can_attack(b):
+            tgts.append(b)
     elif subset == 'defender' and any('taunt' in m for m in aaa):
         tgts += [m for m in aaa if 'taunt' in m]
     elif subset == 'defender':
