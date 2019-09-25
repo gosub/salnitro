@@ -292,6 +292,14 @@ def can_defend(entity):
 
 @pass_on_none
 def attack(game, attacker, defender):
+    if attacker['type'] == 'minion':
+        attack_from_minion(game, attacker, defender)
+    elif attacker['type'] == 'player':
+        attack_from_player(game, attacker, defender)
+    else:
+        raise Exception('unknow attacker type %s' % (card['type']))
+
+def attack_from_minion(game, attacker, defender):
     dmg1 = attacker['attack']
     if defender['type'] == 'minion':
         dmg2 = defender['attack']
@@ -299,7 +307,26 @@ def attack(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
+        if is_equipped(game, defender):
+            dmg2 = defender['equip']['attack']
+            deal_damage(game, attacker, dmg2)
     attacker['attacks_this_turn'] += 1
+
+def attack_from_player(game, attacker, defender):
+    dmg1 = attacker['equip']['attack']
+    if defender['type'] == 'minion':
+        dmg2 = defender['attack']
+        deal_damage(game, defender, dmg1)
+        deal_damage(game, attacker, dmg2)
+    elif defender['type'] == 'player':
+        deal_damage(game, defender, dmg1)
+        if is_equipped(game, defender):
+            dmg2 = defender['equip']['attack']
+            deal_damage(game, attacker, dmg2)
+    attacker['equip']['uses_this_turn'] += 1
+    attacker['equip']['uses'] += 1
+    if attacker['equip']['uses'] >= attacker['equip']['durability']:
+        remove_weapon(game, attacker)
 
 def field_is_full(game, player):
     return len(player['field']) >= game['max_field_size']
