@@ -273,10 +273,19 @@ def discard(game, player, hand_pos):
         player['discard'].append(card)
 
 def can_attack(entity):
-    return entity['type'] == 'minion' \
-        and 'summoned' in entity \
+    if entity['type'] == 'minion':
+        return can_attack_minion(entity)
+    elif entity['type'] == 'player':
+        return can_attack_player(entity)
+
+def can_attack_minion(entity):
+    return 'summoned' in entity \
         and not 'exhausted' in entity \
         and entity['attacks_this_turn'] < entity['max_attacks']
+
+def can_attack_player(entity):
+    return 'equip' in entity \
+        and entity['equip']['uses_this_turn'] < entity['equip']['uses_per_turn']
 
 def can_defend(entity):
     return entity['type'] == 'minion'
