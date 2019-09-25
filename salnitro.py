@@ -219,6 +219,15 @@ def use_hero_power(game):
         hero_power(player)(game)
         player['power_used'] += 1
 
+def equip(game, player, weapon):
+    player['equip'] = weapon
+
+def is_equipped(game, player):
+    return 'equip' in player
+
+def remove_weapon(game, player):
+    del player['equip']
+
 def kill_minion(game, minion):
     for player in game['players']:
         try:
