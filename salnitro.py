@@ -226,7 +226,8 @@ def is_equipped(game, player):
     return 'equip' in player
 
 def remove_weapon(game, player):
-    del player['equip']
+    if is_equipped(game, player):
+        del player['equip']
 
 def kill_minion(game, minion):
     for player in game['players']:
