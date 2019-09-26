@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: implement Acidic Swamp Ooze
 # TODO: show card text
 # TODO: implement divine shield
 # TODO: implement windfury
@@ -78,6 +77,7 @@ def mk_test_deck():
     deck += [goldshire_footman() for _ in range(3)]
     deck += [murloc_raider() for _ in range(3)]
     deck += [stonetusk_boar() for _ in range(3)]
+    deck += [acidic_swamp_ooze() for _ in range(4)]
     return deck
 
 def mk_minion_card(cost, name, attack, health, **other_props):
@@ -122,6 +122,12 @@ def murloc_raider():
 def stonetusk_boar():
     return mk_minion_card(1, "Stonetusk Boar", 1, 1,
             text = "Charge", charge=True)
+
+def acidic_swamp_ooze():
+    return mk_minion_card(2, "Acidic Swamp Ooze", 3, 2,
+            text = "Battlecry: Destroy your opponent's weapon.",
+            battlecry = lambda self, game:
+                          remove_weapon(game, inactive(game)))
 
 # --- --- ---
 
