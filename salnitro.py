@@ -2,6 +2,7 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
+# TODO: debug, player attack count must be kept in player, not weapon
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement deathrattle
