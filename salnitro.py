@@ -69,15 +69,13 @@ def mk_random_deck():
     return deck
 
 def mk_test_deck():
+    fixed = [voodoo_doctor(), elven_archer(), goldshire_footman()]
+    fixed += [murloc_raider(), stonetusk_boar()]
+    fixed += [acidic_swamp_ooze() for _ in range(4)]
     deck = mk_random_deck()
     random.shuffle(deck)
-    deck = deck[:5]
-    deck += [voodoo_doctor() for _ in range(3)]
-    deck += [elven_archer() for _ in range(3)]
-    deck += [goldshire_footman() for _ in range(3)]
-    deck += [murloc_raider() for _ in range(3)]
-    deck += [stonetusk_boar() for _ in range(3)]
-    deck += [acidic_swamp_ooze() for _ in range(4)]
+    deck = deck[:(20-len(fixed))]
+    deck += fixed
     return deck
 
 def mk_minion_card(cost, name, attack, health, **other_props):
