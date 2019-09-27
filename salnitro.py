@@ -2,7 +2,6 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
-# TODO: debug, player attack count must be kept in player, not weapon
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement deathrattle
@@ -40,7 +39,8 @@ def mkplayer(name):
     return {'name': name, 'health': 30, 'mana_slots': 0, 'mana': 0,
             'field': [], 'deck': deck, 'hand':[], 'discard':[],
             'damage': 0, 'burnout': 1, 'type': 'player', 'class': hero_class,
-            'power_used': 0, 'power_per_turn': 1, 'power_cost': 2}
+            'power_used': 0, 'power_per_turn': 1, 'power_cost': 2,
+            'attacks_per_turn': 1, 'attacks_this_turn': 0}
 
 def generic_card_collection():
     all_cards = []
@@ -82,12 +82,12 @@ def mk_test_deck():
 def mk_minion_card(cost, name, attack, health, **other_props):
     return {'type': 'minion', 'name': name,
             'cost': cost, 'attack': attack, 'health': health,
-            'damage': 0, 'max_attacks': 1, 'attacks_this_turn': 0, **other_props}
+            'damage': 0, 'attacks_per_turn': 1, 'attacks_this_turn': 0, **other_props}
 
 def mk_weapon_card(cost, name, attack, durability, **other_props):
     return {'type': 'weapon', 'name': name, 'cost': cost,
             'attack': attack, 'durability': durability,
-            'uses': 0, 'uses_per_turn': 1, 'uses_this_turn': 0, **other_props}
+            'uses': 0, **other_props}
 
 # Uncollectibles
 
@@ -287,11 +287,11 @@ def can_attack(entity):
 def can_attack_minion(entity):
     return 'summoned' in entity \
         and not 'exhausted' in entity \
-        and entity['attacks_this_turn'] < entity['max_attacks']
+        and entity['attacks_this_turn'] < entity['attacks_per_turn']
 
 def can_attack_player(entity):
     return 'equip' in entity \
-        and entity['equip']['uses_this_turn'] < entity['equip']['uses_per_turn']
+        and entity['attacks_this_turn'] < entity['attacks_per_turn']
 
 def can_defend(entity):
     return entity['type'] == 'minion'
@@ -329,7 +329,7 @@ def attack_from_player(game, attacker, defender):
         if is_equipped(game, defender):
             dmg2 = defender['equip']['attack']
             deal_damage(game, attacker, dmg2)
-    attacker['equip']['uses_this_turn'] += 1
+    attacker['attacks_this_turn'] += 1
     attacker['equip']['uses'] += 1
     if attacker['equip']['uses'] >= attacker['equip']['durability']:
         remove_weapon(game, attacker)
@@ -400,7 +400,7 @@ def reset_attack_count(player):
         e['attacks_this_turn'] = 0
 
 def reset_weapon_use_count(player):
-    player['equip']['uses_this_turn'] = 0
+    player['attacks_this_turn'] = 0
 
 def reset_power_count(player):
     player['power_used'] = 0
