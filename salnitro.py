@@ -2,6 +2,8 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
+# TODO: debug, weapon is not active when not player's turn
+# TODO: hero has his own attack (usually 0), increased by weapon
 # TODO: implement divine shield
 # TODO: implement windfury
 # TODO: implement deathrattle
