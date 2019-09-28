@@ -118,11 +118,11 @@ def goldshire_footman():
             text = "Taunt", taunt=True)
 
 def murloc_raider():
-    return mk_minion_card(1, "Murloc Raider", 2, 1)
+    return mk_minion_card(1, "Murloc Raider", 2, 1, subtype='Murloc')
 
 def stonetusk_boar():
     return mk_minion_card(1, "Stonetusk Boar", 1, 1,
-            text = "Charge", charge=True)
+            text = "Charge", charge=True, subtype='Beast')
 
 def acidic_swamp_ooze():
     return mk_minion_card(2, "Acidic Swamp Ooze", 3, 2,
