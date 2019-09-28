@@ -137,6 +137,10 @@ def bluegill_warrior():
     return mk_minion_card(2, "Bluegill Warrior", 2, 1,
                           text="Charge", charge=True, subtype='Murloc')
 
+def frostwolf_grunt():
+    return mk_minion_card(2, "Frostwolf Grunt", 2, 2,
+                          text="Taunt", taunt=True)
+
 # --- --- ---
 
 def mk_damage_card(cost):
