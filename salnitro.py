@@ -133,6 +133,10 @@ def acidic_swamp_ooze():
 def bloodfen_raptor():
     return mk_minion_card(2, "Bloodfen Raptor", 3, 2, subtype='Beast')
 
+def bluegill_warrior():
+    return mk_minion_card(2, "Bluegill Warrior", 2, 1,
+                          text="Charge", charge=True, subtype='Murloc')
+
 # --- --- ---
 
 def mk_damage_card(cost):
