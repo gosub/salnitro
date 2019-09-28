@@ -130,6 +130,9 @@ def acidic_swamp_ooze():
             battlecry = lambda self, game:
                           remove_weapon(game, inactive(game)))
 
+def bloodfen_raptor():
+    return mk_minion_card(2, "Bloodfen Raptor", 3, 2, subtype='Beast')
+
 # --- --- ---
 
 def mk_damage_card(cost):
