@@ -74,9 +74,8 @@ def mk_random_deck():
 def mk_test_deck():
     fixed = [voodoo_doctor(), elven_archer(), goldshire_footman()]
     fixed += [murloc_raider(), stonetusk_boar(), acidic_swamp_ooze()]
-    fixed += [bloodfen_raptor() for _ in range(2)]
-    fixed += [bluegill_warrior() for _ in range(2)]
-    fixed += [frostwolf_grunt() for _ in range(2)]
+    fixed += [bloodfen_raptor(), bluegill_warrior(), frostwolf_grunt()]
+    fixed += [murloc_tidehunter() for _ in range(3)]
     deck = mk_random_deck()
     random.shuffle(deck)
     deck = deck[:(20-len(fixed))]
@@ -100,6 +99,9 @@ def silver_hand_recruit():
 
 def  wicked_knife():
     return mk_weapon_card(1, "Wicked Knife", 1, 2)
+
+def murloc_scout():
+    return mk_minion_card(1, "Murloc Scout", 1, 1)
 
 # BASIC set / Neutral
 
@@ -143,6 +145,10 @@ def frostwolf_grunt():
     return mk_minion_card(2, "Frostwolf Grunt", 2, 2,
                           text="Taunt", taunt=True)
 
+def murloc_tidehunter():
+    return mk_minion_card(2, "Murloc Tidehunter", 2, 1,
+                          text="Battlecry: Summon a 1/1 Murloc Scout.",
+                          battlecry = lambda self, game: summon(game, active(game), murloc_scout()))
 # --- --- ---
 
 def mk_damage_card(cost):
