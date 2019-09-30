@@ -76,7 +76,8 @@ def mk_test_deck():
     fixed = [voodoo_doctor(), elven_archer(), goldshire_footman()]
     fixed += [murloc_raider(), stonetusk_boar(), acidic_swamp_ooze()]
     fixed += [bloodfen_raptor(), bluegill_warrior(), frostwolf_grunt()]
-    fixed += [murloc_tidehunter() for _ in range(3)]
+    fixed += [murloc_tidehunter()]
+    fixed += [novice_engineer() for _ in range(3)]
     deck = mk_random_deck()
     random.shuffle(deck)
     deck = deck[:(20-len(fixed))]
@@ -150,6 +151,11 @@ def murloc_tidehunter():
     return mk_minion_card(2, "Murloc Tidehunter", 2, 1,
                           text="Battlecry: Summon a 1/1 Murloc Scout.",
                           battlecry = lambda self, game: summon(game, active(game), murloc_scout()))
+
+def novice_engineer():
+    return mk_minion_card(2, "Novice Engineer", 1, 1,
+                          text="Battlecry: Draw a card",
+                          battlecry = lambda self, game: draw(game, active(game)))
 # --- --- ---
 
 def mk_damage_card(cost):
