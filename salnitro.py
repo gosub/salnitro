@@ -262,6 +262,14 @@ def remove_weapon(game, player):
     if is_equipped(game, player):
         del player['equip']
 
+def sheathe_weapon(game, player):
+    if is_equipped(game, player):
+        player['equip']['sheathed'] = True
+
+def unsheathe_weapon(game, player):
+    if is_equipped(game, player) and 'sheathed' in player['equip']:
+        del player['equip']['sheathed']
+
 def kill_minion(game, minion):
     for player in game['players']:
         try:
