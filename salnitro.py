@@ -270,6 +270,9 @@ def unsheathe_weapon(game, player):
     if is_equipped(game, player) and 'sheathed' in player['equip']:
         del player['equip']['sheathed']
 
+def weapon_is_unsheated(game, player):
+    return is_equipped(game, player) and not 'sheathed' in player['equip']
+
 def kill_minion(game, minion):
     for player in game['players']:
         try:
