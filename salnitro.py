@@ -417,6 +417,7 @@ def play_minion(game, player, card, from_hand=False):
 
 def new_turn(game):
     switch_player(game)
+    unsheathe_weapon(game, active(game))
     inc_mana_slot(active(game))
     refill_mana(active(game))
     draw(game, active(game))
@@ -428,6 +429,7 @@ def end_turn(game):
     reset_power_count(player)
     if is_equipped(game, player):
         reset_weapon_use_count(player)
+        sheathe_weapon(game, player)
 
 def remove_exhaustion(player):
     for card in player['field']:
