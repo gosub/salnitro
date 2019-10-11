@@ -2,7 +2,6 @@ import random
 from os import system, get_terminal_size
 
 # TODO: show card text
-# TODO: debug, weapon is not active when not player's turn
 # TODO: hero has his own attack (usually 0), increased by weapon
 # TODO: implement divine shield
 # TODO: implement windfury
@@ -352,7 +351,7 @@ def attack_from_minion(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
-        if is_equipped(game, defender):
+        if is_equipped(game, defender) and weapon_is_unsheated(game, defender):
             dmg2 = defender['equip']['attack']
             deal_damage(game, attacker, dmg2)
     attacker['attacks_this_turn'] += 1
@@ -365,7 +364,7 @@ def attack_from_player(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
-        if is_equipped(game, defender):
+        if is_equipped(game, defender) and weapon_is_unsheated(game, defender):
             dmg2 = defender['equip']['attack']
             deal_damage(game, attacker, dmg2)
     attacker['attacks_this_turn'] += 1
