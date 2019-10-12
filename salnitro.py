@@ -1,6 +1,7 @@
 import random
 from os import system, get_terminal_size
 
+# TODO: show sheathed weapon
 # TODO: show card text
 # TODO: hero has his own attack (usually 0), increased by weapon
 # TODO: implement divine shield
