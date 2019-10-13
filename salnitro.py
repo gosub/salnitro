@@ -255,23 +255,23 @@ def use_hero_power(game):
 def equip(game, player, weapon):
     player['equip'] = weapon
 
-def is_equipped(game, player):
+def is_equipped(player):
     return 'equip' in player
 
 def remove_weapon(game, player):
-    if is_equipped(game, player):
+    if is_equipped(player):
         del player['equip']
 
 def sheathe_weapon(game, player):
-    if is_equipped(game, player):
+    if is_equipped(player):
         player['equip']['sheathed'] = True
 
 def unsheathe_weapon(game, player):
-    if is_equipped(game, player) and 'sheathed' in player['equip']:
+    if is_equipped(player) and 'sheathed' in player['equip']:
         del player['equip']['sheathed']
 
 def weapon_is_unsheated(game, player):
-    return is_equipped(game, player) and not 'sheathed' in player['equip']
+    return is_equipped(player) and not 'sheathed' in player['equip']
 
 def kill_minion(game, minion):
     for player in game['players']:
@@ -427,7 +427,7 @@ def end_turn(game):
     remove_exhaustion(player)
     reset_attack_count(player)
     reset_power_count(player)
-    if is_equipped(game, player):
+    if is_equipped(player):
         reset_weapon_use_count(player)
         sheathe_weapon(game, player)
 
