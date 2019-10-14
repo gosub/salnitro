@@ -270,7 +270,7 @@ def unsheathe_weapon(game, player):
     if is_equipped(player) and 'sheathed' in player['equip']:
         del player['equip']['sheathed']
 
-def weapon_is_unsheated(game, player):
+def weapon_is_unsheated(player):
     return is_equipped(player) and not 'sheathed' in player['equip']
 
 def kill_minion(game, minion):
@@ -352,7 +352,7 @@ def attack_from_minion(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
-        if is_equipped(game, defender) and weapon_is_unsheated(game, defender):
+        if is_equipped(defender) and weapon_is_unsheated(defender):
             dmg2 = defender['equip']['attack']
             deal_damage(game, attacker, dmg2)
     attacker['attacks_this_turn'] += 1
@@ -365,7 +365,7 @@ def attack_from_player(game, attacker, defender):
         deal_damage(game, attacker, dmg2)
     elif defender['type'] == 'player':
         deal_damage(game, defender, dmg1)
-        if is_equipped(game, defender) and weapon_is_unsheated(game, defender):
+        if is_equipped(defender) and weapon_is_unsheated(defender):
             dmg2 = defender['equip']['attack']
             deal_damage(game, attacker, dmg2)
     attacker['attacks_this_turn'] += 1
