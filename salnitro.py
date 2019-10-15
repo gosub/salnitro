@@ -482,6 +482,15 @@ def repr_hand(p, hidden=False, antagonist=False):
 def sup(i):
     return "⁰¹²³⁴⁵⁶⁷⁸⁹"[i]
 
+def repr_weapon(p, antagonist):
+    if is_equipped(p):
+        if weapon_is_unsheated(p):
+            return "⚔%d/%d " % (p['equip']['attack'], p['equip']['durability'] - p['equip']['uses'])
+        else:
+            return "⚔-/- "
+    else:
+        return ""
+
 def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
