@@ -1,7 +1,6 @@
 import random
 from os import system, get_terminal_size
 
-# TODO: show sheathed weapon
 # TODO: show card text
 # TODO: hero has his own attack (usually 0), increased by weapon
 # TODO: implement divine shield
@@ -494,7 +493,7 @@ def repr_weapon(p, antagonist):
 def repr_status(p, antagonist):
     name = p['name']
     health = "❤️" + str(p['health']-p['damage'])
-    weapon = "⚔%d/%d " % (p['equip']['attack'], p['equip']['durability'] - p['equip']['uses']) if 'equip' in p else ""
+    weapon = repr_weapon(p, antagonist)
     armor = "  ☒" + str(p['armor']) if 'armor' in p else ""
     hero_class = weapon + p['class'] + armor
     hero_power = '(' + ("*" if p['power_per_turn'] > p['power_used'] else " ") + ")"
