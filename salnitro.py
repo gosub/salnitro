@@ -155,6 +155,10 @@ def novice_engineer():
     return mk_minion_card(2, "Novice Engineer", 1, 1,
                           text="Battlecry: Draw a card",
                           battlecry = lambda self, game: draw(game, active(game)))
+
+def river_crocolisk():
+    return mk_minion_card(2, "River Crocolisk", 2, 3, subtype='Beast')
+
 # --- --- ---
 
 def mk_damage_card(cost):
