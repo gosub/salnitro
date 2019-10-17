@@ -75,8 +75,8 @@ def mk_test_deck():
     fixed = [voodoo_doctor(), elven_archer(), goldshire_footman()]
     fixed += [murloc_raider(), stonetusk_boar(), acidic_swamp_ooze()]
     fixed += [bloodfen_raptor(), bluegill_warrior(), frostwolf_grunt()]
-    fixed += [murloc_tidehunter()]
-    fixed += [novice_engineer() for _ in range(3)]
+    fixed += [murloc_tidehunter(), novice_engineer()]
+    fixed += [river_crocolisk() for _ in range(3)]
     deck = mk_random_deck()
     random.shuffle(deck)
     deck = deck[:(20-len(fixed))]
