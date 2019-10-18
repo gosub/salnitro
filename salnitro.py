@@ -7,7 +7,7 @@ from os import system, get_terminal_size
 # TODO: implement windfury
 # TODO: implement deathrattle
 # TODO: implement effects while card is in play
-# TODO: implement missing basic/neutral cards: GrimScaleOracle, KoboldGeomancer
+# TODO: implement missing basic/neutral cards: GrimScaleOracle, KoboldGeomancer, DalaranMage
 # TODO: implement missing classes/hero powers
 # MAYBE: hero_power as a separate entity from hero_class
 
