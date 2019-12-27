@@ -25,5 +25,8 @@ minion(Name, Cost, Attack, Health, Rest) when is_map(Rest) ->
     Minion = #{attack => Attack, health => Health, damage => 0,
 	       attacks_per_turn => 1, attacks_this_turn => 0},
     card(Name, minion, Cost, maps:merge(Minion, Rest)).
+
 %% GAME FUNCTIONS
 
+active(#{active := p1, p1 := Player}) -> Player;
+active(#{active := p2, p2 := Player}) -> Player.
