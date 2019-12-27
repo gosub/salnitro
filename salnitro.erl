@@ -10,3 +10,6 @@ player(Name, Class, Deck) ->
 game(P1, P2) ->
     #{p1 => P1, p2 => P2,
       active => lists:nth(rand:uniform(2), [p1, p2])}.
+
+card(Name, Type, Cost, Rest) when is_map(Rest) ->
+    maps:merge(#{name => Name, type => Type, cost => Cost}, Rest).
