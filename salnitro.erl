@@ -13,3 +13,13 @@ game(P1, P2) ->
 
 card(Name, Type, Cost, Rest) when is_map(Rest) ->
     maps:merge(#{name => Name, type => Type, cost => Cost}, Rest).
+
+minion(Name, Cost, Attack, Health) ->
+    Minion = #{attack => Attack, health => Health, damage => 0,
+	       attacks_per_turn => 1, attacks_this_turn => 0},
+    card(Name, minion, Cost, Minion).
+
+minion(Name, Cost, Attack, Health, Rest) when is_map(Rest) ->
+    Minion = #{attack => Attack, health => Health, damage => 0,
+	       attacks_per_turn => 1, attacks_this_turn => 0},
+    card(Name, minion, Cost, maps:merge(Minion, Rest)).
