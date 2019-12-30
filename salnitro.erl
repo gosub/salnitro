@@ -36,3 +36,6 @@ inactive(#{active := p2, p1 := Player}) -> Player.
 
 switch_player(#{active := p1} = Game) -> Game#{active := p2};
 switch_player(#{active := p2} = Game) -> Game#{active := p1}.
+
+inc_mana_slot(Player) ->
+    maps:update_with(mana_slots, fun(Slots) -> Slots+1 end, Player).
