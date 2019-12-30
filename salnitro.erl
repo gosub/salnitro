@@ -39,3 +39,6 @@ switch_player(#{active := p2} = Game) -> Game#{active := p1}.
 
 inc_mana_slot(Player) ->
     maps:update_with(mana_slots, fun(Slots) -> Slots+1 end, Player).
+
+refill_mana(#{mana_slots:=Slots}=Player) ->
+    Player#{mana := Slots}.
