@@ -30,3 +30,6 @@ minion(Name, Cost, Attack, Health, Rest) when is_map(Rest) ->
 
 active(#{active := p1, p1 := Player}) -> Player;
 active(#{active := p2, p2 := Player}) -> Player.
+
+inactive(#{active := p1, p2 := Player}) -> Player;
+inactive(#{active := p2, p1 := Player}) -> Player.
