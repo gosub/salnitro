@@ -33,3 +33,6 @@ active(#{active := p2, p2 := Player}) -> Player.
 
 inactive(#{active := p1, p2 := Player}) -> Player;
 inactive(#{active := p2, p1 := Player}) -> Player.
+
+switch_player(#{active := p1} = Game) -> Game#{active := p2};
+switch_player(#{active := p2} = Game) -> Game#{active := p1}.
