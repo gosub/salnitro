@@ -45,3 +45,16 @@ refill_mana(#{mana_slots:=Slots}=Player) ->
 
 heal(#{damage := Dmg}=Target, Amount) ->
     Target#{damage := max(0, Dmg-Amount)}.
+
+deal_damage(#{armor := Armor}=Target, Amount) when Amount < Armor ->
+    Target#{armor := Armor-Amount};
+deal_damage(#{armor := Armor}=Target, Amount) when Amount == Armor ->
+    maps:take(armor, Target);
+deal_damage(#{armor := Armor}=Target, Amount) when Amount > Armor ->
+    Residual = Amount - Armor,
+    Unarmored = maps:without([armor], Target),
+    deal_damage(Unarmored, Residual);
+deal_damage(#{health := Health}=Target, Amount) when Amount < Health ->
+    Target#{health := Health-Amount};
+deal_damage(#{health := Health}=Target, Amount) when Amount >= Health ->
+    Target#{health := 0, dead => true}.
