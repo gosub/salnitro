@@ -42,3 +42,6 @@ inc_mana_slot(Player) ->
 
 refill_mana(#{mana_slots:=Slots}=Player) ->
     Player#{mana := Slots}.
+
+heal(#{damage := Dmg}=Target, Amount) ->
+    Target#{damage := max(0, Dmg-Amount)}.
