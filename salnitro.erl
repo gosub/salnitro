@@ -58,3 +58,8 @@ deal_damage(#{health := Health}=Target, Amount) when Amount < Health ->
     Target#{health := Health-Amount};
 deal_damage(#{health := Health}=Target, Amount) when Amount >= Health ->
     Target#{health := 0, dead => true}.
+
+gain_armor(#{armor := Armor}=Target, Amount) ->
+    Target#{armor := Armor+Amount};
+gain_armor(Target, Amount) ->
+    Target#{armor => Amount}.
