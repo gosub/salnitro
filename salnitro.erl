@@ -73,3 +73,18 @@ gain_armor(Target, Amount) ->
 hero_power(#{class := Class}) ->
     #{power:=Power} = hero(Class),
     Power.
+
+use_hero_power(Game) ->
+    #{mana:=Mana, power_cost:=PowerCost, power_per_turn := PowXTurn,
+      power_used:= PowUsd}=Player = active(Game),
+    Power = hero_power(Player),
+    use_hero_power_aux(Game, Power, Mana, PowerCost, PowXTurn, PowUsd, Player).
+
+use_hero_power_aux(G, _, _, _, PowXTurn, PowUsd, _)
+  when PowUsd >= PowXTurn ->
+    G;
+use_hero_power_aux(G, _, Mana, PwrCost, _, _, _)
+  when PwrCost > Mana ->
+    G;
+use_hero_power_aux(G, Pwr, Mana, PwrCost, _, _, Player) ->
+    todo. % TODO, first implement put_active and put_inactive
