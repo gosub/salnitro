@@ -69,3 +69,7 @@ gain_armor(#{armor := Armor}=Target, Amount) ->
     Target#{armor := Armor+Amount};
 gain_armor(Target, Amount) ->
     Target#{armor => Amount}.
+
+hero_power(#{class := Class}) ->
+    #{power:=Power} = hero(Class),
+    Power.
