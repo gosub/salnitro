@@ -86,8 +86,10 @@ use_hero_power_aux(G, _, _, _, PowXTurn, PowUsd, _)
 use_hero_power_aux(G, _, Mana, PwrCost, _, _, _)
   when PwrCost > Mana ->
     G;
-use_hero_power_aux(G, Pwr, Mana, PwrCost, _, _, Player) ->
-    todo. % TODO, first implement put_active and put_inactive
+use_hero_power_aux(G, Pwr, Mana, PwrCost, _, PowUsd, Player) ->
+    G2 = put_active(G, Player#{mana:= Mana-PwrCost}),
+    G3 = Pwr(G2),
+    put_active(G3, Player#{power_used:=PowUsd+1}).
 
 put_active(#{active:=p1}=Game, Player) ->
     Game#{p1:=Player};
