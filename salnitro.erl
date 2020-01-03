@@ -100,3 +100,8 @@ put_inactive(#{active:=p1}=Game, Player) ->
     Game#{p2:=Player};
 put_inactive(#{active:=p2}=Game, Player) ->
     Game#{p1:=Player}.
+
+equip(#{equip:=_}=Player, Weapon) ->
+    Player#{equip := Weapon};
+equip(Player, Weapon) ->
+    Player#{equip => Weapon}.
