@@ -88,3 +88,8 @@ use_hero_power_aux(G, _, Mana, PwrCost, _, _, _)
     G;
 use_hero_power_aux(G, Pwr, Mana, PwrCost, _, _, Player) ->
     todo. % TODO, first implement put_active and put_inactive
+
+put_active(#{active:=p1}=Game, Player) ->
+    Game#{p1:=Player};
+put_active(#{active:=p2}=Game, Player) ->
+    Game#{p2:=Player}.
