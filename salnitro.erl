@@ -93,3 +93,8 @@ put_active(#{active:=p1}=Game, Player) ->
     Game#{p1:=Player};
 put_active(#{active:=p2}=Game, Player) ->
     Game#{p2:=Player}.
+
+put_inactive(#{active:=p1}=Game, Player) ->
+    Game#{p2:=Player};
+put_inactive(#{active:=p2}=Game, Player) ->
+    Game#{p1:=Player}.
