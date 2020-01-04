@@ -105,3 +105,8 @@ equip(#{equip:=_}=Player, Weapon) ->
     Player#{equip := Weapon};
 equip(Player, Weapon) ->
     Player#{equip => Weapon}.
+
+is_equipped(#{equip:=_}) ->
+    true;
+is_equipped(_) ->
+    false.
