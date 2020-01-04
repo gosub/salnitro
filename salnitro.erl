@@ -82,10 +82,10 @@ use_hero_power(Game) ->
 
 use_hero_power_aux(G, _, _, _, PowXTurn, PowUsd, _)
   when PowUsd >= PowXTurn ->
-    G;
+    power_already_used(G);
 use_hero_power_aux(G, _, Mana, PwrCost, _, _, _)
   when PwrCost > Mana ->
-    G;
+    not_enough_mana(G);
 use_hero_power_aux(G, Pwr, Mana, PwrCost, _, PowUsd, Player) ->
     G2 = put_active(G, Player#{mana:= Mana-PwrCost}),
     G3 = Pwr(G2),
@@ -118,3 +118,12 @@ remove_weapon(Player) ->
 % TODO: unsheathe_weapon
 % TODO: weapon_is_unsheated
 % TODO: kill_minion
+
+
+%% GAME EXCEPTIONS
+
+not_enough_mana(Game) ->
+    Game.
+
+power_already_used(Game) ->
+    Game.
