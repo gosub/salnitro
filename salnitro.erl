@@ -32,7 +32,7 @@ hero(hunter) ->
     #{power => fun(Game) -> deal_damage(inactive(Game), 2) end,
       desc => "Deal 2 damage to the enemy hero."}.
 
-%% GAME FUNCTIONS
+%% GAME ACTIONS
 
 active(#{active := p1, p1 := Player}) -> Player;
 active(#{active := p2, p2 := Player}) -> Player.
@@ -113,3 +113,8 @@ is_equipped(_) ->
 
 remove_weapon(Player) ->
     maps:without([equip], Player).
+
+% TODO: sheathe_weapen
+% TODO: unsheathe_weapon
+% TODO: weapon_is_unsheated
+% TODO: kill_minion
