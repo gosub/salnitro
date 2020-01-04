@@ -110,3 +110,6 @@ is_equipped(#{equip:=_}) ->
     true;
 is_equipped(_) ->
     false.
+
+remove_weapon(Player) ->
+    maps:without([equip], Player).
