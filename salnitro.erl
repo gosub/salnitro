@@ -114,7 +114,10 @@ is_equipped(_) ->
 remove_weapon(Player) ->
     maps:without([equip], Player).
 
-% TODO: sheathe_weapen
+sheathe_weapon(#{equip:=Weapon}=Player) ->
+    W2 = Weapon#{sheathed=>true},
+    Player#{weapon:=W2}.
+
 % TODO: unsheathe_weapon
 % TODO: weapon_is_unsheated
 % TODO: kill_minion
